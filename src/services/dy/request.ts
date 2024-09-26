@@ -1,5 +1,4 @@
 import axios, { AxiosError, AxiosHeaders, AxiosPromise, AxiosResponse, InternalAxiosRequestConfig } from "axios";
-import { toast } from "sonner";
 import { browser } from "wxt/browser";
 
 const adapter = async (config: InternalAxiosRequestConfig): AxiosPromise => {

@@ -17,13 +17,10 @@ export interface ImageInfo {
 
 export interface InteractInfo {
     relation: string;
-    liked: boolean;
     liked_count: string;
-    collected: boolean;
     collected_count: string;
     comment_count: string;
     share_count: string;
-    followed: boolean;
 }
 
 export interface NoteCard {

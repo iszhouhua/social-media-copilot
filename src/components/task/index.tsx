@@ -1,25 +1,41 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
 import { Progress } from "@/components/ui/progress.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { throttle } from "lodash";
 import { browser } from "wxt/browser";
 import JSZip from "jszip";
-import { FileInfo, TaskStatus } from "./types";
+import { FileInfo, TaskState } from "./useTask";
+export * from './useTask';
 
-export function TaskDialog(props: {
+
+export enum TaskStatus {
+    /**
+     * 默认状态
+     */
+    INITIAL,
+    /**
+     * 执行中
+     */
+    EXECUTING,
+    /**
+     * 运行完成
+     */
+    COMPLETED,
+    /**
+     * 运行失败
+     */
+    FAILED
+}
+
+export function TaskDialog(props: TaskState<any, any> & {
     children: React.ReactNode;
-    getFileInfos: () => Promise<Array<FileInfo>>;
-    total: number;
-    completed: number;
-    status: TaskStatus;
-    setStatus: Dispatch<SetStateAction<TaskStatus>>;
     onClose?: () => void;
 }) {
-    const { total, completed, status, setStatus, getFileInfos, onClose, children } = props;
+    const { total, completed, status, setStatus, processor, onClose, children } = props;
 
     const handleDownload = async () => {
-        const files: Array<FileInfo> = await getFileInfos();
+        const files: Array<FileInfo> = await processor.getFileInfos();
         for (const file of files) {
             let url: string;
             if (file.type === "buffer") {

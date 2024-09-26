@@ -8,10 +8,14 @@ export default async function handleMessage(
 ) {
   const { name, body } = message;
   switch (name) {
+    case "openPopup":
+      return browser.action.openPopup();
     case "executeScript":
       return executeScript(body, sender);
     case "realUrl":
       return getRealUrl(body);
+    case "fetch":
+      return fetch(body).then(res => res.json());
     case "download":
       if (body.filename) {
         // 替换掉特殊字符

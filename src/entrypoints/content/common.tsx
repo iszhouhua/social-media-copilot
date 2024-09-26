@@ -1,7 +1,9 @@
 import { Toaster } from "@/components/ui/sonner";
 import React from "react";
-import { BatchPostExportDialog } from "@/components/post";
-import { BatchCommentExportDialog } from "@/components/comment";
+import { BatchPostExportDialog } from "@/components/task/post";
+import { BatchCommentExportDialog } from "@/components/task/post-comment";
+import { BatchAuthorPostExportDialog } from "@/components/task/author-post";
+import { BatchAuthorExportDialog } from "@/components/task/author";
 
 export default () => {
     const [dialogName, setDialogName] = React.useState<string>("");
@@ -18,7 +20,9 @@ export default () => {
     return (<>
         <Toaster position="top-center" theme="light" richColors expand />
         {dialogName === "post" && <BatchPostExportDialog />}
-        {dialogName === "comment" && <BatchCommentExportDialog />}
+        {dialogName === "author-post" && <BatchAuthorPostExportDialog />}
+        {dialogName === "post-comment" && <BatchCommentExportDialog />}
+        {dialogName === "author" && <BatchAuthorExportDialog />}
     </>
     );
 };

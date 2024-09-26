@@ -3,11 +3,11 @@ import { Button } from "@/components/ui/button";
 import JSZip from "jszip";
 import copy from "copy-to-clipboard";
 import { toast } from "sonner";
-import icon from "@/public/icon/32.png";
 import { browser } from "wxt/browser";
 import { throttle } from "lodash";
-import { CommentExportDialog } from "@/components/comment";
+import { CommentExportDialog } from "@/components/task/post-comment";
 import React from "react";
+import { Logo } from "@/components/logo";
 
 type Note = {
   noteId: string
@@ -40,7 +40,7 @@ type Note = {
   }
 }
 
-const App = (props: {
+const Component = (props: {
   note: Note
 }) => {
   const { note } = props;
@@ -79,7 +79,7 @@ const App = (props: {
 
 
   return (<>
-    <img src={icon} alt="社媒助手"></img>
+    <Logo />
     <Button onClick={throttle(exportMedia, 2000)}>{note.type == "video" ? "下载无水印视频" : "下载笔记图片"}</Button>
     <Button onClick={copyContent}>复制文案</Button>
     <Button onClick={() => setOpenDialog(true)}>导出评论</Button>
@@ -101,6 +101,6 @@ export default defineContentScriptUI({
     if (!res?.note) {
       return remove();
     }
-    mounted.render(<App note={res.note} />);
+    mounted.render(<Component note={res.note} />);
   }
 });

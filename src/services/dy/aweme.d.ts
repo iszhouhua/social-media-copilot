@@ -44,7 +44,6 @@ export interface ImageInfo {
 
 export interface Statistics {
     admire_count: number;
-    aweme_id: string;
     collect_count: number;
     comment_count: number;
     digg_count: number;
@@ -60,4 +59,24 @@ export interface AuthorInfo {
     nickname: string;
     signature: string;
     follower_count: number;
+}
+
+
+// /aweme/v1/web/aweme/post/
+export interface AwemeV1WebPost {
+    aweme_list: AwemeDetail[];
+    has_more: number;
+    max_cursor: number;
+    min_cursor: number;
+    post_serial: number;
+    replace_series_cover: number;
+    request_item_cursor: number;
+    status_code: number;
+}
+
+export interface AwemeV1WebPostParam {
+    sec_user_id: string;
+    max_cursor: number;
+    count: number;
+    cut_version: number;
 }

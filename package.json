@@ -1,7 +1,7 @@
 {
   "name": "social-media-copilot",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "author": "Andy Zhou <andy_zh@foxmail.com>",
   "engines": {
@@ -9,11 +9,11 @@
   },
   "scripts": {
     "dev": "wxt",
-    "dev:firefox": "wxt -b firefox",
+    "dev:edge": "wxt -b edge",
     "build": "wxt build",
-    "build:firefox": "wxt build -b firefox",
+    "build:edge": "wxt build -b edge",
     "zip": "wxt zip",
-    "zip:firefox": "wxt zip -b firefox",
+    "zip:edge": "wxt zip -b edge",
     "compile": "tsc --noEmit",
     "postinstall": "wxt prepare"
   },

@@ -1,21 +1,20 @@
 import { defineContentScriptUI, getAnchor, triggerCreateContentScriptUI } from "../ui";
 import { Button } from "@/components/ui/button";
-import icon from "@/public/icon/32.png";
 import React from "react";
 import { throttle } from "lodash";
 import { browser } from "wxt/browser";
 import { toast } from "sonner";
-import { CommentExportDialog } from "@/components/comment/single-export-dialog";
+import { CommentExportDialog } from "@/components/task/post-comment/single-export-dialog";
 import JSZip from "jszip";
-import { getAwemeDetail } from "@/services/dy/aweme";
-import type { AwemeDetail } from "@/services/dy/aweme.d";
+import { aweme as api } from "@/services/dy";
+import { Logo } from "@/components/logo";
 
-const App = (props: {
+const Component = (props: {
   type: "video" | "note";
   awemeId: string;
 }) => {
   const { type, awemeId } = props;
-  const [aweme, setAweme] = React.useState<AwemeDetail>();
+  const [aweme, setAweme] = React.useState<api.AwemeDetail>();
   const [openDialog, setOpenDialog] = React.useState<boolean>(false);
 
   const handlerDownloadVideo = async () => {
@@ -44,7 +43,7 @@ const App = (props: {
 
   const getAweme = async () => {
     if (aweme) return aweme;
-    const awemeDetail = await getAwemeDetail(awemeId).then(res => res.aweme_detail);
+    const awemeDetail = await api.awemeDetail(awemeId).then(res => res.aweme_detail);
     setAweme(awemeDetail);
     return awemeDetail;
   };
@@ -55,7 +54,7 @@ const App = (props: {
   }
 
   return (<>
-    <img src={icon} alt="社媒助手"></img>
+    <Logo />
     <Button size="sm" onClick={throttle(handlerDownloadVideo, 2000)}>{type === "note" ? "下载图集" : "下载无水印视频"}</Button>
     <Button size="sm" onClick={throttle(handleOpenDialog, 2000)}>导出评论</Button>
     {openDialog && <CommentExportDialog onClose={() => setOpenDialog(false)} postId={awemeId} maxValue={aweme?.statistics?.comment_count ?? 0} />}
@@ -72,7 +71,7 @@ const detailDefinition = defineContentScriptUI({
   async onMount({ mounted, remove }) {
     const match = location.pathname.match(/^\/(video|note)\/(\d+)$/);
     if (!match) return remove();
-    mounted.render(<App type={match[1] as any} awemeId={match[2]} />);
+    mounted.render(<Component type={match[1] as any} awemeId={match[2]} />);
   }
 });
 
@@ -93,7 +92,7 @@ const recommendDefinition = defineContentScriptUI({
     const awemeId = activeVideo.getAttribute("data-e2e-vid");
     if (!awemeId) return remove();
     const type = activeVideo.querySelector(".account-card")?.textContent === "图文" ? "note" : "video";
-    mounted.render(<App type={type} awemeId={awemeId} />);
+    mounted.render(<Component type={type} awemeId={awemeId} />);
 
     if (location.pathname === "/") {
       // 首页需要监听视频变化

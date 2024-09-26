@@ -1,5 +1,4 @@
-import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from "axios";
-import { toast } from "sonner";
+import axios, { AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { browser } from "wxt/browser";
 
 const baseUrl = "https://edith.xiaohongshu.com";

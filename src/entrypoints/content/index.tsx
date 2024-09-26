@@ -14,6 +14,7 @@ export default defineContentScript({
     // 通用内容
     const ui = await createShadowRootUi(ctx, {
       name: "social-media-copilot",
+      anchor: "html",
       position: "overlay",
       zIndex: 2147483647,
       isolateEvents: true,
