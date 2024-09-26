@@ -23,7 +23,7 @@
 
 - **Chrome**：<https://chrome.google.com/webstore/detail/dbichmdlbjdeplpkhcejgkakobjbjalc>
 - **Edge**：<https://microsoftedge.microsoft.com/addons/detail/gneijakmdhgakglgogbpldbjhbeddibj>
-- **其他浏览器**：从 [Releases](https://github.com/iszhouhua/social-media-copilot/releases) 中下载最新版的`social-media-copilot.zip`文件，手动加载到浏览器中
+- **其他浏览器**：下载最新版的[social-media-copilot.crx](https://github.com/iszhouhua/social-media-copilot/releases/latest/download/social-media-copilot.crx)或[social-media-copilot.zip](https://github.com/iszhouhua/social-media-copilot/releases/latest/download/social-media-copilot.zip)文件，手动加载到浏览器中
 
 ### 具体功能介绍
 
@@ -64,11 +64,11 @@ pnpm dev
 
 ### QQ交流群
 
-![QQ交流群](docs/images/QQ群二维码.jpg)
+![QQ交流群](docs/images/QQ群二维码.png)
 
 ### 微信交流群
 
-![微信交流群](docs/images/微信群二维码.jpg)
+![微信交流群](docs/images/微信群二维码.png)
 
 > 如二维码已失效，可加作者微信。记得备注来意
 
