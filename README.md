@@ -60,19 +60,17 @@ pnpm dev
 
 群组链接：[https://t.me/SocialMediaCopilot](https://t.me/SocialMediaCopilot)
 
-> 建议优先加Telegram群
-
 ### QQ交流群
 
-<img width="500px" src="docs/images/QQ群二维码.png" />
+<img width="400px" src="docs/images/QQ群二维码.png" />
 
 ### 微信交流群
 
-<img width="500px" src="docs/images/微信群二维码.png" />
+<img width="400px" src="docs/images/微信群二维码.png" />
 
 > 如二维码已失效，可加作者微信。记得备注来意
 
-<img width="500px" src="src/assets/images//wechat-qr-code.png" />
+<img width="400px" src="src/assets/images//wechat-qr-code.png" />
 
 ## 免责声明
 
@@ -86,7 +84,7 @@ pnpm dev
 
 ### v0.0.2
 
- -  支持小红书和抖音平台一键跳转到商业平台
+ - 支持小红书和抖音平台一键跳转到商业平台
  - 支持小红书和抖音平台根据创作者ID或链接导出创作者信息和作品数据
  - 在小红书和抖音平台的博主/达人详情页植入便捷操作
 
