@@ -1,7 +1,7 @@
 {
   "name": "social-media-copilot",
   "private": true,
-  "version": "0.0.2",
+  "version": "0.0.3",
   "type": "module",
   "author": "Andy Zhou <andy_zh@foxmail.com>",
   "engines": {
@@ -29,6 +29,7 @@
     "@radix-ui/react-progress": "^1.1.0",
     "@radix-ui/react-separator": "^1.1.0",
     "@radix-ui/react-slot": "^1.1.0",
+    "aria-hidden": "v1.2.1",
     "axios": "^1.7.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",

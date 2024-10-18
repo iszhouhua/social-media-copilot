@@ -6,18 +6,18 @@ export const LimitPerIdFormField = <
     TFieldValues extends FieldValues = FieldValues,
     TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 >(props: Omit<ControllerProps<TFieldValues, TName>, "render"> & {
-    idLabel: string
-    dataLabel: string
+    label?: string
+    description?: string
 }) => {
-    const { idLabel, dataLabel, ...restProps } = props;
+    const { label, description, ...restProps } = props;
     return (
         <FormField
             {...restProps}
             render={({ field }) => (
                 <FormItem>
                     <div className="flex items-center justify-between">
-                        <FormLabel>导出数量</FormLabel>
-                        <FormDescription>每个{idLabel}需要导出的{dataLabel}数</FormDescription>
+                        <FormLabel>{label || "导出数量"}</FormLabel>
+                        <FormDescription>{description}</FormDescription>
                     </div>
                     <FormControl>
                         <Input type="number" {...field} />

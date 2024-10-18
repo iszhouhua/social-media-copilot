@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import moment from "moment";
+import platforms, { type Platform } from "@/platforms";
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -12,7 +12,7 @@ export function cn(...inputs: ClassValue[]) {
  * @param interval 检测间隔
  * @param timeout 超时时间
  */
-export function waitFor<T>(func: () => T | Promise<T>, interval = 500, timeout = 5000): Promise<T> {
+export function waitFor<T>(func: () => T, interval = 500, timeout = 5000): Promise<T> {
     return new Promise((resolve) => {
         const startTime = Date.now();
 
@@ -53,4 +53,7 @@ export async function hash(content: string, algorithm: AlgorithmIdentifier = 'SH
     return hashHex;
 }
 
-export * as platform from "./platform";
+
+export function getPlatform(platform?: typeof window.platform): Platform {
+    return platforms[platform || window.platform];
+  }

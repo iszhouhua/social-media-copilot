@@ -13,10 +13,11 @@ declare global {
     interface Window {
         platform: 'xhs' | "dy";
         context: ContentScriptContext;
+
     }
 
 
     interface WindowEventMap {
-        "open-dialog": CustomEvent<string>;
+        "task-dialog": CustomEvent<{ name: string; props?: Record<string, any>; }>;
     }
 }
