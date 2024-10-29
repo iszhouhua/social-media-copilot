@@ -12,6 +12,7 @@ export interface AwemeDetail {
     // 2:图文 4:视频
     media_type: number;
     video: VideoInfo;
+    music: any;
     images: ImageInfo[];
     statistics: Statistics;
     author: AuthorInfo;
@@ -19,10 +20,19 @@ export interface AwemeDetail {
 
 export interface VideoInfo {
     duration: number;
+    format: string;
     origin_cover: {
         uri: string;
         height: number;
         width: number;
+    };
+    cover: {
+        uri: string;
+        url_key: string;
+        height: number;
+        width: number;
+        data_size: number;
+        url_list: string[];
     };
     play_addr: {
         uri: string;

@@ -8,7 +8,7 @@ type MessageMap = {
     response: any
   };
   "download": {
-    request: Downloads.DownloadOptionsType;
+    request: Downloads.DownloadOptionsType & { path?: string };
     response: number
   };
   "realUrl": {

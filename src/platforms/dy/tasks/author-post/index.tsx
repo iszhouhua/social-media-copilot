@@ -5,17 +5,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { throttle } from "lodash";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { NeedMediaFormField } from "@/components/form-field/need-media";
 import { TaskDialog } from "@/components/task";
 import { Processor } from "./processor";
 import { LimitPerIdFormField } from "@/components/form-field/limit-per-id";
 import { parseAuthorId } from "../author";
-import { TextareaArrayFormField,textareaArrayTransform } from "@/components/form-field/textarea-array";
+import { TextareaArrayFormField, textareaArrayTransform } from "@/components/form-field/textarea-array";
+import { MaterialTypesFormField } from "@/components/form-field/material-types";
 
 const formSchema = z.object({
-    needMedia: z.boolean().default(false).optional(),
     limitPerId: z.coerce.number().min(1, "请输入需要导出的数量"),
     authorIds: z.string().array().or(z.string().trim().min(1, "需要导出的数据不能为空").transform((arg, ctx) => textareaArrayTransform(arg, ctx, parseAuthorId))),
+    materialTypes: z.string().array()
 });
 
 export type FormSchema = z.infer<typeof formSchema>;
@@ -37,9 +37,9 @@ export default (props: {
     const form = useForm<FormSchema>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            needMedia: false,
             authorIds: author ? [author.authorId] : [],
             limitPerId: author?.postCount || parseInt(localStorage.getItem(storageKey) ?? "10"),
+            materialTypes: []
         }
     });
 
@@ -66,7 +66,11 @@ export default (props: {
                         control={form.control}
                         name="limitPerId"
                         description={author ? `当前达人共有${author.postCount}个作品` : '每位达人需要导出的视频数量'} />
-                    <NeedMediaFormField control={form.control} name="needMedia" />
+                    <MaterialTypesFormField control={form.control} name="materialTypes" items={[
+                        { label: "视频/图集", value: "video", required: true },
+                        { label: "封面", value: "cover" },
+                        { label: "音乐", value: "music" },
+                    ]} />
                 </form>
             </Form>
             <DialogFooter>

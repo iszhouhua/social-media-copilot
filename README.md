@@ -66,21 +66,7 @@ PS：打赏时请备注捐赠者，如有遗漏请联系我添加。
 
 ## 交流群
 
-### Telegram交流群
-
-群组链接：[https://t.me/SocialMediaCopilot](https://t.me/SocialMediaCopilot)
-
-### QQ交流群
-
-<img width="400px" src="docs/images/QQ群二维码.png" />
-
-### 微信交流群
-
-<img width="400px" src="docs/images/微信群二维码.png" />
-
-> 如二维码已失效，可加作者微信。记得备注来意
-
-<img width="400px" src="src/assets/images//wechat-qr-code.png" />
+[点击查看群组信息](docs/交流群.md)
 
 ## 常见问题
 

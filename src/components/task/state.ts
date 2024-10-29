@@ -26,7 +26,7 @@ export type TaskSetStateActions = {
     setStatus: React.Dispatch<React.SetStateAction<TaskStatus>>;
 }
 
-export type TaskFileInfo = { filename: string } & (
+export type TaskFileInfo = { filename: string, path?: string } & (
     | {
         type: 'blob';
         data: Blob;
@@ -62,7 +62,7 @@ export abstract class TaskProcessor<P = any, T = any> {
         }
         await delay(1000);
         const res = await func(...args);
-        if(!res){
+        if (!res) {
             throw new Error("接口返回内容为空，可能已触发平台风控");
         }
         requestCache.set(key, res);
@@ -78,7 +78,7 @@ export abstract class TaskProcessor<P = any, T = any> {
         return {
             data: new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }),
             type: 'blob',
-            filename: `${name}-${moment().format("YYYYMMDD-HHmmss")}.xlsx`,
+            filename: `社媒助手-${name}-${moment().format("YYYYMMDD-HHmmss")}.xlsx`,
         }
     }
 

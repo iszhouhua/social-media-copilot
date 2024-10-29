@@ -24,7 +24,7 @@ export const Component = (props: {
       const zip = new JSZip();
       aweme.images?.map((item) => item.url_list.reverse()[0]).forEach((image, index) => {
         const imageData = fetch(image).then((res) => res.blob());
-        zip.file(`图${index + 1}.png`, imageData, { binary: true });
+        zip.file(`图${index + 1}.jpeg`, imageData, { binary: true });
       });
       const blob = await zip.generateAsync({ type: "blob" });
       url = URL.createObjectURL(blob);

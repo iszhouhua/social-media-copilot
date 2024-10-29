@@ -19,7 +19,11 @@ export default async function handleMessage(
       if (body.filename) {
         // 替换掉特殊字符
         body.filename = "【社媒助手】" + body.filename.replace(/[^\w\u4e00-\u9fa5\.\-\_]/g, "");
+        if (body.path) {
+          body.filename = `${body.path}/${body.filename}`;
+        }
       }
+      delete body.path;
       return browser.downloads.download(body);
   }
 }
@@ -35,20 +39,10 @@ async function executeScript(code: string, sender: Runtime.MessageSender) {
   return injectionResults?.[0]?.result;
 }
 async function getRealUrl(url: string) {
-  const origins = [url];
-  if (new URL(url).hostname === "v.douyin.com") {
-    origins.push('*://www.iesdouyin.com/*');
-  }
-  const granted = await browser.permissions.request({ origins });
-  if (!granted) return;
   const response = await fetch(url);
   return response.url;
 }
 
 async function executionFetch(body: Array<any>) {
-  const granted = await browser.permissions.request({
-    origins: [body[0]]
-  });
-  if (!granted) return;
   return fetch(body[0], body?.[1]).then(res => res.json());
 }
