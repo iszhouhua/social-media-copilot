@@ -34,6 +34,9 @@ interface Result {
 request.interceptors.response.use(
     (response: AxiosResponse<Result, any>) => {
         const { data, msg, success } = response.data
+        if (data && success === undefined) {
+            return data;
+        }
         if (!success) {
             throw new Error(msg || '请求失败')
         }

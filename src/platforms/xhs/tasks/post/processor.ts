@@ -3,14 +3,14 @@ import type { NoteCard, WebV1Feed } from "@/platforms/xhs/http/note.d";
 import { FormSchema } from ".";
 import { webV1Feed } from "@/platforms/xhs/http/note";
 
-export class Processor extends TaskProcessor<FormSchema, WebV1Feed> {
+export class Processor<P extends FormSchema> extends TaskProcessor<P, WebV1Feed> {
 
     async execute() {
         const { postParams } = this.condition;
         this.actions.setTotal(postParams.length);
         for (let i = 0; i < postParams.length; i++) {
             const postParam = postParams[i];
-            const post = await this.request(webV1Feed, postParam.id,postParam.source,postParam.token);
+            const post = await this.request(webV1Feed, postParam.id, postParam.source, postParam.token, ['jpg']);
             this.data[postParam.id] = post;
             this.actions.setCompleted(prev => prev + 1);
         }
@@ -51,7 +51,7 @@ export class Processor extends TaskProcessor<FormSchema, WebV1Feed> {
             row.push(
                 `https://www.xiaohongshu.com/user/profile/${noteCard.user?.user_id}`,
             );
-            
+
             row.push(noteCard.type === 'video' ? '视频' : '图文');
             row.push(noteCard.title);
             row.push(noteCard.desc);
@@ -71,7 +71,7 @@ export class Processor extends TaskProcessor<FormSchema, WebV1Feed> {
     }
 
     getMediaFile(noteCard: NoteCard): TaskFileInfo {
-        const name = `${noteCard.title || noteCard.desc?.split('\n')?.[0]?.substring(0, 20)}-${noteCard.note_id}`;
+        const name = `${noteCard.title}-${noteCard.note_id}`;
         if (noteCard.type === 'video') {
             const hosts = [
                 'https://sns-video-bd.xhscdn.com/',
@@ -85,13 +85,26 @@ export class Processor extends TaskProcessor<FormSchema, WebV1Feed> {
                 data: hosts[randomIndex] + videoKey,
             };
         } else {
-            const images: Array<TaskFileInfo> = noteCard.image_list.map(
+            const images: Array<TaskFileInfo> = noteCard.image_list.flatMap(
                 (value, index) => {
-                    return {
-                        filename: `图${index + 1}.png`,
+                    let list: Array<TaskFileInfo> = [{
+                        filename: `图${index + 1}.jpg`,
                         type: 'url',
                         data: value.url_default,
-                    };
+                    }];
+                    if (value.live_photo) {
+                        for (const key of Object.keys(value.stream)) {
+                            const liveUrl = value.stream?.[key]?.[0]?.master_url;
+                            if (liveUrl) {
+                                list.push({
+                                    filename: `图${index + 1}.mp4`,
+                                    type: 'url',
+                                    data: liveUrl,
+                                });
+                            }
+                        };
+                    }
+                    return list;
                 },
             );
             return {

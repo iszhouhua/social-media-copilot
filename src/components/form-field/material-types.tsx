@@ -6,14 +6,15 @@ export const MaterialTypesFormField = <
     TFieldValues extends FieldValues = FieldValues,
     TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 >(props: Omit<ControllerProps<TFieldValues, TName>, "render"> & {
-    items: { value: string, label: string, required?: boolean }[]
+    items: { value: string, label: string, required?: boolean }[];
+    defaultChecked?: boolean;
 }) => {
-    const { items, ...restProps } = props;
+    const { items, defaultChecked, ...restProps } = props;
     return (
         <FormField
             {...restProps}
             render={({ field }) => {
-                const [needMaterial, setNeedMaterial] = useState<boolean | 'indeterminate'>(false);
+                const [needMaterial, setNeedMaterial] = useState<boolean | undefined>(defaultChecked);
                 useEffect(() => {
                     if (!needMaterial) {
                         field.onChange([]);
@@ -27,7 +28,13 @@ export const MaterialTypesFormField = <
                         <div className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow mb-4">
                             <Checkbox
                                 checked={needMaterial}
-                                onCheckedChange={setNeedMaterial}
+                                onCheckedChange={(v) => {
+                                    if (v === 'indeterminate') {
+                                        setNeedMaterial(undefined);
+                                    } else {
+                                        setNeedMaterial(v);
+                                    }
+                                }}
                             />
                             <div className="space-y-1 leading-none">
                                 <FormLabel>同时导出素材</FormLabel>

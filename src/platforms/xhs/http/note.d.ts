@@ -13,6 +13,7 @@ export interface ImageInfo {
     url_pre: string;
     url_default: string;
     url: string;
+    stream: any;
 }
 
 export interface InteractInfo {

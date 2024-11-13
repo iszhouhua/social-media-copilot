@@ -1,6 +1,7 @@
 import { FormSchema } from ".";
 import * as http from "@/platforms/dy/http";
 import { TaskFileInfo, TaskProcessor } from "@/components/task";
+import { getMaterialFiles } from "./material-file";
 
 export class Processor extends TaskProcessor<FormSchema, http.aweme.AwemeDetail> {
 
@@ -16,11 +17,11 @@ export class Processor extends TaskProcessor<FormSchema, http.aweme.AwemeDetail>
     }
 
     async getFileInfos(): Promise<Array<TaskFileInfo>> {
-        const { postIds, needMedia } = this.condition;
+        const { postIds, materialTypes } = this.condition;
         const dataList: any[][] = [[
             '视频ID',
             '视频链接',
-            '达人ID',
+            '达人UID',
             '抖音号',
             '达人昵称',
             '达人链接',
@@ -38,14 +39,11 @@ export class Processor extends TaskProcessor<FormSchema, http.aweme.AwemeDetail>
         for (const awemeId of postIds) {
             const aweme: http.aweme.AwemeDetail = this.data[awemeId];
             if (!aweme) continue;
-            if (needMedia) {
-                medias.push(this.getMediaFile(aweme));
-            }
+            medias.push(...getMaterialFiles(aweme,materialTypes));
             const row = [];
             row.push(awemeId);
             row.push(aweme.share_url);
-
-            row.push(aweme.author?.sec_uid);
+            row.push(aweme.author?.uid);
             row.push(aweme.author?.unique_id || aweme.author?.short_id);
             row.push(aweme.author?.nickname);
             row.push(`https://www.douyin.com/user/${aweme.author?.sec_uid}`);
@@ -64,31 +62,5 @@ export class Processor extends TaskProcessor<FormSchema, http.aweme.AwemeDetail>
             dataList.push(row);
         }
         return [this.getExcelFileInfo(dataList, "抖音-视频数据导出"), ...medias];
-    }
-
-
-    getMediaFile(aweme: http.aweme.AwemeDetail): TaskFileInfo {
-        const name = `${aweme.desc?.split('\n')?.[0]?.substring(0, 20)}-${aweme.aweme_id}`;
-        if (aweme.media_type === 2) {
-            const images: TaskFileInfo[] = aweme.images.map((value, index) => {
-                return {
-                    filename: `图${index + 1}.png`,
-                    type: 'url',
-                    data: value.url_list.reverse()[0],
-                };
-            });
-            return {
-                filename: name + '.zip',
-                type: 'zip',
-                data: images,
-            };
-        } else {
-            const vid = aweme?.video?.play_addr?.uri;
-            return {
-                filename: name + '.mp4',
-                type: 'url',
-                data: `https://aweme.snssdk.com/aweme/v1/play/?video_id=${vid}`,
-            };
-        }
     }
 }

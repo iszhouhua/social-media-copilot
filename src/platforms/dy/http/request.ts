@@ -42,9 +42,9 @@ request.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
 // 响应拦截器
 request.interceptors.response.use(
     (response: AxiosResponse) => {
-        const { status_code, status_msg } = response.data;
-        if (status_code !== 0) {
-            throw new Error(status_msg || "请求失败");
+        const { status_code, status_msg, code, message } = response.data;
+        if (status_code !== 0 && code !== 0) {
+            throw new Error(status_msg || message || "请求失败");
         }
         return response.data;
     }

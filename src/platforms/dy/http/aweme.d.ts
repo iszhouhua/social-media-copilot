@@ -16,6 +16,18 @@ export interface AwemeDetail {
     images: ImageInfo[];
     statistics: Statistics;
     author: AuthorInfo;
+    mix_info?: MixInfo;
+}
+
+export interface MixInfo {
+    mix_id: string;
+    mix_name: string;
+    statis: {
+        collect_vv: number;
+        current_episode: number;
+        play_vv: number;
+        updated_to_episode: number;
+    }
 }
 
 export interface VideoInfo {
@@ -89,4 +101,18 @@ export interface AwemeV1WebPostParam {
     max_cursor: number;
     count: number;
     cut_version: number;
+}
+
+export interface AwemeV1WebMixParam {
+    mix_id: string;
+    cursor: number;
+    count: number;
+}
+
+// /aweme/v1/web/mix/aweme/
+export interface AwemeV1WebbMix {
+    aweme_list: AwemeDetail[];
+    has_more: number;
+    cursor: number;
+    status_code: number;
 }

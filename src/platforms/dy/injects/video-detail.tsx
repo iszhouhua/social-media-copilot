@@ -8,9 +8,11 @@ import { Logo } from "@/components/logo";
 export const Component = (props: {
   type: "video" | "note";
   awemeId: string;
+  isMix?: boolean;
 }) => {
-  const { type, awemeId } = props;
+  const { type, awemeId, isMix } = props;
   const [aweme, setAweme] = useState<api.AwemeDetail>();
+  const mixPost = useTaskDialog("mix-post");
   const taskDialog = useTaskDialog('post-comment');
 
   const handlerDownloadVideo = async () => {
@@ -41,10 +43,15 @@ export const Component = (props: {
   };
 
   const getAweme = async () => {
-    if (aweme) return aweme;
-    const awemeDetail = await api.awemeDetail(awemeId).then(res => res.aweme_detail);
-    setAweme(awemeDetail);
-    return awemeDetail;
+    try {
+      if (aweme) return aweme;
+      const awemeDetail = await api.awemeDetail(awemeId).then(res => res.aweme_detail);
+      setAweme(awemeDetail);
+      return awemeDetail;
+    } catch (e: any) {
+      toast.error(e.message);
+      throw e;
+    }
   };
 
   const handleOpenDialog = async () => {
@@ -58,10 +65,23 @@ export const Component = (props: {
     })
   }
 
+  const handlerDownloadMix = async () => {
+    const aweme = await getAweme();
+    const mixId = aweme.mix_info?.mix_id;
+    if (!mixId) {
+      toast.error("获取合集信息失败");
+      return;
+    }
+    mixPost.open({
+      mixInfo: aweme.mix_info
+    });
+  }
+
   return (<>
     <Logo />
     <Button size="sm" onClick={throttle(handlerDownloadVideo, 2000)}>{type === "note" ? "下载图集" : "下载无水印视频"}</Button>
     <Button size="sm" onClick={throttle(handleOpenDialog, 2000)}>导出评论</Button>
+    {isMix && <Button size="sm" onClick={throttle(handlerDownloadMix, 2000)}>导出合集</Button>}
   </>);
 };
 
@@ -75,6 +95,7 @@ export default defineInjectContentScriptUi({
   async onMount({ mounted, remove }) {
     const match = location.pathname.match(/^\/(video|note)\/(\d+)$/);
     if (!match) return remove();
-    mounted.render(<Component type={match[1] as any} awemeId={match[2]} />);
+    const awemeMix = document.querySelector('div[data-e2e="aweme-mix"]');
+    mounted.render(<Component type={match[1] as any} awemeId={match[2]} isMix={!!awemeMix} />);
   }
 });

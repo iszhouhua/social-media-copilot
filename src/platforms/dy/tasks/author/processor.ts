@@ -39,11 +39,11 @@ export class Processor extends TaskProcessor<FormSchema, DataValue> {
             "赞评藏平均数",
         ] : [];
         const dataList: any[][] = [[
-            '达人ID',
+            '达人UID',
+            '抖音号',
             '达人昵称',
             '达人链接',
             '达人性别',
-            '抖音号',
             '个人简介',
             '粉丝数',
             '获赞',
@@ -56,11 +56,11 @@ export class Processor extends TaskProcessor<FormSchema, DataValue> {
             const info = this.data[authorId];
             if (!info) continue;
             const row = [];
-            row.push(authorId);
+            row.push(info.uid);
+            row.push(info.unique_id || info.short_id);
             row.push(info.nickname);
             row.push(`https://www.douyin.com/user/${info.sec_uid}`);
             row.push(info.gender === 1 ? '男' : info.gender === 2 ? '女' : '未知');
-            row.push(info.unique_id || info.short_id);
             row.push(info.signature);
             row.push(info.follower_count);
             row.push(info.total_favorited);

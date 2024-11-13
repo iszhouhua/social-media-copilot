@@ -10,7 +10,7 @@ import { TaskDialog } from "@/components/task";
 import { Processor } from "./processor";
 import { LimitPerIdFormField } from "@/components/form-field/limit-per-id";
 import { parseAuthorId } from "../author";
-import { TextareaArrayFormField,textareaArrayTransform } from "@/components/form-field/textarea-array";
+import { TextareaArrayFormField, textareaArrayTransform } from "@/components/form-field/textarea-array";
 
 const formSchema = z.object({
     needMedia: z.boolean().default(false).optional(),
@@ -44,7 +44,7 @@ export default (props: {
 
     function onSubmit(values: FormSchema) {
         localStorage.setItem(storageKey, values.limitPerId + '');
-        taskRef.current!.start(Processor, values);
+        taskRef.current!.start(Processor, { ...values, postParams: [] });
     }
 
     return (<TaskDialog ref={taskRef}>

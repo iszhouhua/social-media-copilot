@@ -17,10 +17,12 @@ export default async function handleMessage(
       return executionFetch(body);
     case "download":
       if (body.filename) {
+        const regexp: RegExp = /[^\w\u4e00-\u9fa5\.\-\_]/g;
         // 替换掉特殊字符
-        body.filename = "【社媒助手】" + body.filename.replace(/[^\w\u4e00-\u9fa5\.\-\_]/g, "");
+        body.filename = "【社媒助手】" + body.filename.replace(regexp, "");
         if (body.path) {
-          body.filename = `${body.path}/${body.filename}`;
+          const path = body.path.replace(regexp, "");
+          body.filename = `${path}/${body.filename}`;
         }
       }
       delete body.path;

@@ -29,7 +29,7 @@ export function defineInjectContentScriptUi(definition: InjectContentScriptUiOpt
   return definition;
 }
 
-const uiMap = new WeakMap<Element, InjectContentScriptUi>();
+const uiMap = new Map<Element, InjectContentScriptUi>();
 
 /**
  * 触发动态创建UI
@@ -42,6 +42,12 @@ export function triggerCreateInjectContentScriptUi() {
     if (!anchor) return;
     const ui = await getOrCreateContentScriptUi(uiDefinition, anchor);
     uiDefinition.onMount(ui);
+  });
+  // 清理所有失效节点
+  uiMap.forEach((value, key) => {
+    if (document.contains(key)) return;
+    uiMap.delete(key);
+    value?.remove();
   });
 }
 

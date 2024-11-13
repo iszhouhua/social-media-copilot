@@ -1,8 +1,6 @@
-import { Contact, JapaneseYen, MessageCircleWarning, MessageSquare, MessageSquareText } from "lucide-react";
+import { Contact, JapaneseYen, MessageSquare, MessageSquareText } from "lucide-react";
 import { CollapsibleItem, Item } from "./item";
 import { UnsupportedPlatform } from "./unsupported";
-import wechatQrCode from "@/assets/images/wechat-qr-code.png";
-import appreciationCode from "@/assets/images/appreciation-code.png";
 import type { Platform } from "@/platforms";
 
 export const Popup = () => {
@@ -10,7 +8,7 @@ export const Popup = () => {
     const [tabId, setTabId] = useState<number>();
 
     useEffect(() => {
-        browser.tabs.query({ active: true }).then(([tab]) => {
+        browser.tabs.query({ active: true, currentWindow: true }).then(([tab]) => {
             if (!tab) {
                 return;
             }
@@ -39,12 +37,11 @@ export const Popup = () => {
     return (platform ? <div className="flex flex-col gap-2 py-2">
         <platform.popup onOpenDialog={handleOpenDialog} />
         <CollapsibleItem icon={Contact} title="沟通交流">
-            <Item icon={MessageCircleWarning} title="功能反馈" onClick={() => window.open('https://github.com/iszhouhua/social-media-copilot/issues')} />
             <Item icon={MessageSquareText} title="Telegram交流群" onClick={() => window.open('https://t.me/SocialMediaCopilot')} />
-            <Item icon={MessageSquareText} title="QQ交流群" onClick={() => window.open('https://gitee.com/iszhouhua/social-media-copilot/raw/main/docs/images/qq-group-qr-code.png')} />
-            <Item icon={MessageSquare} title="微信交流群" onClick={() => window.open('https://gitee.com/iszhouhua/social-media-copilot/raw/main/docs/images/wechat-group-qr-code.png')} />
-            <Item icon={MessageSquare} title="添加微信" onClick={() => window.open(wechatQrCode)} />
+            <Item icon={MessageSquareText} title="QQ交流群" onClick={() => window.open('https://smc.iszhouhua.com/image/qq-group-qr-code.jpg')} />
+            <Item icon={MessageSquareText} title="微信交流群" onClick={() => window.open('https://smc.iszhouhua.com/image/wechat-group-qr-code.jpg')} />
+            <Item icon={MessageSquare} title="添加微信" onClick={() => window.open('https://smc.iszhouhua.com/image/wechat-qr-code.jpg')} />
         </CollapsibleItem>
-        <Item icon={JapaneseYen} title="打赏作者" onClick={() => window.open(appreciationCode)} />
+        <Item icon={JapaneseYen} title="打赏作者" onClick={() => window.open('https://smc.iszhouhua.com/image/appreciation-code.jpg')} />
     </div> : <UnsupportedPlatform />);
 };

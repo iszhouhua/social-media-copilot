@@ -5,14 +5,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { throttle } from "lodash";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { NeedMediaFormField } from "@/components/form-field/need-media";
 import { TaskDialog } from "@/components/task";
 import { Processor } from "./processor";
 import { parsePostId } from "./parse-post-id";
 import { TextareaArrayFormField, textareaArrayTransform } from "@/components/form-field/textarea-array";
+import { MaterialTypesFormField } from "@/components/form-field/material-types";
 
 const formSchema = z.object({
-    needMedia: z.boolean().default(false).optional(),
+    materialTypes: z.string().array(),
     postIds: z.string().trim().min(1, "需要导出的数据不能为空").transform((arg, ctx) => textareaArrayTransform(arg, ctx, parsePostId)),
 });
 
@@ -27,7 +27,7 @@ export default () => {
     const form = useForm<FormSchema>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            needMedia: false,
+            materialTypes: [],
             postIds: []
         }
     });
@@ -42,7 +42,12 @@ export default () => {
                     <TextareaArrayFormField
                         control={form.control}
                         name="postIds" label="视频ID或链接" description="支持输入视频ID或链接，可使用App分享链接"/>
-                    <NeedMediaFormField control={form.control} name="needMedia" />
+                        
+                    <MaterialTypesFormField control={form.control} name="materialTypes" items={[
+                        { label: "视频/图集", value: "video", required: true },
+                        { label: "封面", value: "cover" },
+                        { label: "音乐", value: "music" },
+                    ]} />
                 </form>
             </Form>
             <DialogFooter>

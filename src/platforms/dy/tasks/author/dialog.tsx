@@ -37,7 +37,7 @@ export default () => {
                 <form className="space-y-6 py-4">
                     <TextareaArrayFormField
                         control={form.control}
-                        name="authorIds" label="达人ID或链接" description="支持输入达人ID或链接，可使用App分享链接" />
+                        name="authorIds" label="达人链接" description="请输入达人主页链接，可使用App分享链接" />
                     <NeedInteractionInfoFormField
                         control={form.control}
                         name="needInteractionInfo"

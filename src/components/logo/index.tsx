@@ -1,4 +1,4 @@
-import icon from "@/public/icon/32.png";
+import icon from "@/assets/icons/logo.png";
 
 export function Logo() {
     return (<img src={icon} alt="社媒助手" onClick={() => {

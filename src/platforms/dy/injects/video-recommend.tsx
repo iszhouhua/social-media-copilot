@@ -17,7 +17,11 @@ const recommendDefinition = defineInjectContentScriptUi({
         const awemeId = activeVideo.getAttribute("data-e2e-vid");
         if (!awemeId) return remove();
         const type = activeVideo.querySelector(".account-card")?.textContent === "图文" ? "note" : "video";
-        mounted.render(<Component type={type} awemeId={awemeId} />);
+        let isMix = !!activeVideo.querySelector(".mix-detail-container");
+        if (!isMix && activeVideo.querySelector('.under-title-tag')?.textContent?.startsWith('合集')) {
+            isMix = true;
+        }
+        mounted.render(<Component type={type} awemeId={awemeId} isMix={isMix} />);
 
         if (location.pathname === "/") {
             // 首页需要监听视频变化

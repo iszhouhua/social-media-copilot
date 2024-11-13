@@ -29,8 +29,8 @@ export class Processor extends TaskProcessor<FormSchema, http.comment.Comment[]>
             '评论ID',
             '视频ID',
             '视频链接',
-            '用户ID',
             '抖音号',
+            '用户UID',
             '用户名称',
             '用户主页',
             '评论内容',
@@ -41,7 +41,7 @@ export class Processor extends TaskProcessor<FormSchema, http.comment.Comment[]>
             'IP地址',
             '一级评论ID',
             '引用的评论ID',
-            '引用的用户ID',
+            '引用的用户UID',
             '引用的用户名称',
         ]];
         const getRow = (comment: http.comment.Comment | http.comment.ReplyComment): Array<any> => {
@@ -49,8 +49,8 @@ export class Processor extends TaskProcessor<FormSchema, http.comment.Comment[]>
             row.push(comment.cid);
             row.push(comment.aweme_id);
             row.push(`https://www.douyin.com/video/${comment.aweme_id}`);
-            row.push(comment.user?.sec_uid);
             row.push(comment.user?.unique_id || comment.user?.short_id);
+            row.push(comment.user?.uid);
             row.push(comment.user?.nickname);
             row.push(`https://www.douyin.com/user/${comment.user?.sec_uid}`);
             row.push(comment.text);
