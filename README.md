@@ -52,24 +52,25 @@ pnpm dev
 
 如果觉得项目不错的话可以打赏哦。您的支持就是我最大的动力！
 
-![打赏](docs/images/appreciation-code.jpg)
-
-### 捐赠列表
-
-> 非常感谢列表中的朋友，你们的肯定和支持是我前进的最大动力！
-
-PS：打赏时请备注捐赠者，如有遗漏请联系我添加。
-
-|  昵称  | 金额 |    日期    |
-| :----: | :--: | :--------: |
-| 八戒 |  20  | 2024-11-19 |
-| 徐凤年 |  1.88  | 2024-11-14 |
-| andyjames |  8.88  | 2024-11-13 |
-| 纯、灰 |  88  | 2024-10-11 |
+[点击前往打赏](https://alms.iszhouhua.com)
 
 ## 交流群
 
-[点击查看群组信息](docs/交流群.md)
+### Telegram交流群
+
+群组链接：[https://t.me/SocialMediaCopilot](https://t.me/SocialMediaCopilot)
+
+### QQ交流群
+
+<img width="400px" src="https://smc.iszhouhua.com/image/qq-group-qr-code.jpg" />
+
+### 微信交流群
+
+<img width="400px" src="https://smc.iszhouhua.com/image/wechat-group-qr-code.jpg" />
+
+> 如二维码已失效，可加作者微信。记得备注来意
+
+<img width="400px" src="https://smc.iszhouhua.com/image/wechat-qr-code.jpg" />
 
 ## 常见问题
 
