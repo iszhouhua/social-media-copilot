@@ -1,0 +1,23 @@
+name: 社媒助手
+extName: 社媒助手 - 小红书、抖音数据采集工具
+extDescription: 小红书、抖音等社媒平台的运营辅助工具，支持一键导出无水印图片/视频、文案复制、评论采集、作品数据采集、批量导出数据等...
+popup:
+  batchExportAuthor: 批量导出$1信息
+  batchExportPost: 批量导出$1数据
+  batchExportPostByUrl: 根据$1链接导出
+  batchExportPostComment: 批量导出$1评论
+  contact: 沟通交流
+  telegramGroup: Telegram交流群
+  qqGroup: QQ交流群
+  wechatGroup: 微信交流群
+  wechat: 作者微信
+  donate: 打赏作者
+  help: 帮助｜更新日志
+dy:
+  name: 抖音
+  author: 达人
+  post: 视频
+xhs:
+  name: 小红书
+  author: 博主
+  post: 笔记

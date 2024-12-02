@@ -1,11 +1,3 @@
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
-import platforms, { type Platform } from "@/platforms";
-
-export function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs));
-}
-
 /**
  * 等待函数返回非空内容，直到超时
  * @param func 需要执行的函数
@@ -53,7 +45,16 @@ export async function hash(content: string, algorithm: AlgorithmIdentifier = 'SH
     return hashHex;
 }
 
+export type Platform = "xhs" | "dy";
 
-export function getPlatform(platform?: typeof window.platform): Platform {
-    return platforms[platform || window.platform];
-  }
+/**
+ * 获取平台代码
+ */
+export function getPlatform(url: string = location.href): Platform | undefined {
+    switch (new URL(url).hostname) {
+        case "www.xiaohongshu.com":
+            return "xhs";
+        case "www.douyin.com":
+            return "dy";
+    }
+}
