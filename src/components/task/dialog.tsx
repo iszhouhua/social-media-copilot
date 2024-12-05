@@ -2,7 +2,6 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "
 import { Progress } from "@/components/ui/progress.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { throttle } from "lodash";
-import JSZip from "jszip";
 import { TaskFileInfo, TaskProcessor, TaskSetStateActions, TaskStatus } from ".";
 import { toast } from "sonner";
 import React from "react";
@@ -50,33 +49,12 @@ export const TaskDialog = React.forwardRef<{ start: StartFunc; }, { children: Re
             let url: string;
             if (file.type === "blob") {
                 url = URL.createObjectURL(file.data);
-            } else if (file.type === "zip") {
-                const blob = await getZipBlob(file.data);
-                url = URL.createObjectURL(blob);
             } else {
                 url = file.data;
             }
             await browser.runtime.sendMessage<"download">({ name: "download", body: { url, filename: file.filename, path: file.path } });
             URL.revokeObjectURL(url);
         }
-    };
-
-    const getZipBlob = (files: Array<TaskFileInfo>): Promise<Blob> => {
-        const zip = new JSZip();
-        for (const file of files) {
-            let fileData: Blob | Promise<Blob>;
-            if (file.type === "zip") {
-                fileData = getZipBlob(file.data);
-            } else if (file.type === "blob") {
-                fileData = file.data;
-            } else {
-                const url = new URL(file.data);
-                url.protocol = location.protocol
-                fileData = fetch(url).then((res) => res.blob());
-            }
-            zip.file(file.filename, fileData, { binary: true });
-        }
-        return zip.generateAsync({ type: "blob" });
     };
 
     const percentage = Math.floor((completed ?? 0) / (total || 100) * 100);

@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { throttle } from "lodash";
 import { toast } from "sonner";
-import JSZip from "jszip";
 import { aweme as api } from "@/platforms/dy/http";
 import { Logo } from "@/components/logo";
 
@@ -21,25 +20,15 @@ export const Component = (props: {
       toast.error("获取视频信息失败");
       return;
     }
-    let url: string;
     if (aweme.media_type === 2) {
-      const zip = new JSZip();
       aweme.images?.map((item) => item.url_list.reverse()[0]).forEach((image, index) => {
-        const imageData = fetch(image).then((res) => res.blob());
-        zip.file(`图${index + 1}.jpeg`, imageData, { binary: true });
+        browser.runtime.sendMessage<"download">({ name: "download", body: { url: image, filename: (aweme.desc || aweme.aweme_id) + `-图${index + 1}.jpeg` } });
       });
-      const blob = await zip.generateAsync({ type: "blob" });
-      url = URL.createObjectURL(blob);
     } else if (aweme.media_type === 4) {
       const vid = aweme.video.play_addr.uri;
-      url = `https://aweme.snssdk.com/aweme/v1/play/?video_id=${vid}`;
-    } else {
-      toast.error("媒体类型非法");
-      return;
+      const url = `https://aweme.snssdk.com/aweme/v1/play/?video_id=${vid}`;
+      await browser.runtime.sendMessage<"download">({ name: "download", body: { url, filename: (aweme.desc || aweme.aweme_id) + ".mp4" } });
     }
-    const filename = (aweme.desc || aweme.aweme_id) + (type === "note" ? ".zip" : ".mp4");
-    await browser.runtime.sendMessage<"download">({ name: "download", body: { url, filename } });
-    URL.revokeObjectURL(url);
   };
 
   const getAweme = async () => {

@@ -40,7 +40,7 @@ export default () => {
                 <form className="space-y-6 py-4">
                     <TextareaArrayFormField
                         control={form.control}
-                        name="authorIds" label="博主ID或链接" />
+                        name="authorIds" label="博主链接" />
                     <NeedInteractionInfoFormField
                         control={form.control}
                         name="needInteractionInfo"

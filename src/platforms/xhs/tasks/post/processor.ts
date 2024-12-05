@@ -40,7 +40,7 @@ export class Processor<P extends FormSchema> extends TaskProcessor<P, WebV1Feed>
             const noteCard = feed.items?.[0]?.note_card;
             if (!noteCard) continue;
             if (this.condition.needMedia) {
-                medias.push(this.getMediaFile(noteCard));
+                medias.push(...this.getMediaFile(noteCard));
             }
             const row = [];
             row.push(postParam.id);
@@ -70,25 +70,20 @@ export class Processor<P extends FormSchema> extends TaskProcessor<P, WebV1Feed>
         return [this.getExcelFileInfo(dataList, "小红书-笔记数据导出"), ...medias];
     }
 
-    getMediaFile(noteCard: NoteCard): TaskFileInfo {
+    getMediaFile(noteCard: NoteCard): TaskFileInfo[] {
         const name = `${noteCard.title}-${noteCard.note_id}`;
         if (noteCard.type === 'video') {
-            const hosts = [
-                'https://sns-video-bd.xhscdn.com/',
-                'https://sns-video-hw.xhscdn.com/',
-            ];
-            const randomIndex = Math.floor(Math.random() * hosts.length);
             const videoKey = noteCard.video.consumer.origin_video_key;
-            return {
+            return [{
                 filename: name + '.mp4',
                 type: 'url',
-                data: hosts[randomIndex] + videoKey,
-            };
+                data: 'https://sns-video-bd.xhscdn.com/' + videoKey,
+            }];
         } else {
             const images: Array<TaskFileInfo> = noteCard.image_list.flatMap(
                 (value, index) => {
                     let list: Array<TaskFileInfo> = [{
-                        filename: `图${index + 1}.jpg`,
+                        filename: `${name}-图${index + 1}.jpg`,
                         type: 'url',
                         data: value.url_default,
                     }];
@@ -97,7 +92,7 @@ export class Processor<P extends FormSchema> extends TaskProcessor<P, WebV1Feed>
                             const liveUrl = value.stream?.[key]?.[0]?.master_url;
                             if (liveUrl) {
                                 list.push({
-                                    filename: `图${index + 1}.mp4`,
+                                    filename: `${name}-图${index + 1}.mp4`,
                                     type: 'url',
                                     data: liveUrl,
                                 });
@@ -107,11 +102,7 @@ export class Processor<P extends FormSchema> extends TaskProcessor<P, WebV1Feed>
                     return list;
                 },
             );
-            return {
-                filename: name + '.zip',
-                type: 'zip',
-                data: images,
-            };
+            return images;
         }
     }
 }

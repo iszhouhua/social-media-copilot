@@ -60,6 +60,7 @@ export interface WebV2CommentSubPage {
 export interface CommentPageParam {
     note_id: string;
     cursor: string;
+    xsec_token:string;
     top_comment_id: string;
     image_formats: string;
 }

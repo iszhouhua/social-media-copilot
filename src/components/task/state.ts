@@ -34,10 +34,6 @@ export type TaskFileInfo = { filename: string, path?: string } & (
     | {
         type: 'url';
         data: string;
-    }
-    | {
-        type: 'zip';
-        data: Array<TaskFileInfo>;
     });
 
 const requestCache = new Map<string, any>();

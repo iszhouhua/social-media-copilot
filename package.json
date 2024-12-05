@@ -1,7 +1,7 @@
 {
   "name": "social-media-copilot",
   "private": true,
-  "version": "0.0.5",
+  "version": "0.0.7",
   "type": "module",
   "author": "Andy Zhou <andy_zh@foxmail.com>",
   "engines": {
@@ -34,7 +34,6 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "copy-to-clipboard": "^3.3.3",
-    "jszip": "^3.10.1",
     "lodash": "^4.17.21",
     "lucide-react": "^0.416.0",
     "moment": "^2.30.1",

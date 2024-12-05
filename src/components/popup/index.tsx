@@ -1,4 +1,4 @@
-import { Contact, JapaneseYen, MessageSquare, MessageSquareText } from "lucide-react";
+import { Contact, Info, JapaneseYen, MessageSquare, MessageSquareText } from "lucide-react";
 import { CollapsibleItem, Item } from "./item";
 import { UnsupportedPlatform } from "./unsupported";
 import type { Platform } from "@/platforms";
@@ -42,6 +42,7 @@ export const Popup = () => {
             <Item icon={MessageSquareText} title="微信交流群" onClick={() => window.open('https://smc.iszhouhua.com/image/wechat-group-qr-code.jpg')} />
             <Item icon={MessageSquare} title="添加微信" onClick={() => window.open('https://smc.iszhouhua.com/image/wechat-qr-code.jpg')} />
         </CollapsibleItem>
-        <Item icon={JapaneseYen} title="打赏作者" onClick={() => window.open('https://smc.iszhouhua.com/image/appreciation-code.jpg')} />
+        <Item icon={JapaneseYen} title="打赏作者" onClick={() => window.open('https://alms.iszhouhua.com')} />
+        <Item icon={Info} title="使用文档" onClick={() => window.open('https://ocn0jsywtv09.feishu.cn/wiki/space/7441517360869064705')} />
     </div> : <UnsupportedPlatform />);
 };

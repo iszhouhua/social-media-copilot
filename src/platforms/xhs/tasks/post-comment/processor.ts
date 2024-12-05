@@ -6,25 +6,25 @@ import { getCommentPage, getCommentSubPage } from "@/platforms/xhs/http/comment"
 export class Processor extends TaskProcessor<FormSchema, Comment[]> {
 
     async execute() {
-        const { postIds, limitPerId } = this.condition;
-        let total = postIds.length * limitPerId;
+        const { postParams, limitPerId } = this.condition;
+        let total = postParams.length * limitPerId;
         this.actions.setTotal(total);
         let completed = 0;
         this.actions.setCompleted(completed);
-        for (const noteId of postIds) {
-            const comments = await this.getNoteComments(noteId, limitPerId, completed);
+        for (const postParam of postParams) {
+            const comments = await this.getNoteComments(postParam, limitPerId, completed);
             const count = this.getCommentCount(comments);
             total += count - limitPerId;
             completed += count;
             this.actions.setCompleted(completed);
             this.actions.setTotal(total);
             //将采集到的数据绑定在 data 上
-            this.data[noteId] = comments;
+            this.data[postParam.id] = comments;
         }
     }
 
     async getFileInfos(): Promise<Array<TaskFileInfo>> {
-        const { postIds } = this.condition;
+        const { postParams } = this.condition;
         const dataList = [[
             '评论ID',
             '笔记ID',
@@ -43,11 +43,15 @@ export class Processor extends TaskProcessor<FormSchema, Comment[]> {
             '引用的用户ID',
             '引用的用户名称',
         ]];
-        const getRow = (comment: Comment | SubComment): Array<any> => {
+        const getRow = (comment: Comment | SubComment, postParam: {
+            id: string;
+            source: string;
+            token: string;
+        }): Array<any> => {
             const row = [];
             row.push(comment.id);
             row.push(comment.note_id);
-            row.push(`https://www.xiaohongshu.com/explore/${comment.note_id}`);
+            row.push(`https://www.xiaohongshu.com/explore/${comment.note_id}??xsec_token=${postParam.token}&xsec_source=${postParam.source}`);
             row.push(comment.user_info?.user_id);
             row.push(comment.user_info?.nickname);
             row.push(
@@ -69,14 +73,14 @@ export class Processor extends TaskProcessor<FormSchema, Comment[]> {
             }
             return row;
         };
-        for (const noteId of postIds) {
-            const comments = this.data[noteId];
+        for (const postParam of postParams) {
+            const comments = this.data[postParam.id];
             if (!comments) continue;
             for (const comment of comments) {
-                dataList.push(getRow(comment));
+                dataList.push(getRow(comment, postParam));
                 if (comment.sub_comments?.length) {
                     for (const subComment of comment.sub_comments) {
-                        dataList.push(getRow(subComment));
+                        dataList.push(getRow(subComment, postParam));
                     }
                 }
             }
@@ -90,7 +94,11 @@ export class Processor extends TaskProcessor<FormSchema, Comment[]> {
      * @param limit 条数限制
      */
     async getNoteComments(
-        noteId: string,
+        postParam: {
+            id: string;
+            source: string;
+            token: string;
+        },
         limit: number,
         completed: number = 0,
     ): Promise<Comment[]> {
@@ -99,7 +107,8 @@ export class Processor extends TaskProcessor<FormSchema, Comment[]> {
         // 获取一级评论
         while (true) {
             const commentPage = await this.request(getCommentPage, {
-                note_id: noteId,
+                note_id: postParam.id,
+                xsec_token: postParam.token,
                 cursor: cursor,
                 top_comment_id: '',
                 image_formats: 'jpg,webp,avif',
@@ -123,7 +132,7 @@ export class Processor extends TaskProcessor<FormSchema, Comment[]> {
         const hasMoreSubComments = commentList.filter((item) => item.sub_comment_has_more);
         for (const comment of hasMoreSubComments) {
             const subComments = await this.getNoteSubComments(
-                noteId,
+                postParam,
                 comment.id,
                 comment.sub_comment_cursor,
                 limit - this.getCommentCount(commentList),
@@ -145,14 +154,19 @@ export class Processor extends TaskProcessor<FormSchema, Comment[]> {
      * @param limit 条数限制
      */
     async getNoteSubComments(
-        noteId: string,
+        postParam: {
+            id: string;
+            source: string;
+            token: string;
+        },
         rootCommentId: string,
         cursor: string,
         limit: number,
     ): Promise<SubComment[]> {
         const subCommentList: SubComment[] = [];
         const commentPage = await this.request(getCommentSubPage, {
-            note_id: noteId,
+            note_id: postParam.id,
+            xsec_token: postParam.token,
             root_comment_id: rootCommentId,
             num: 10,
             cursor: cursor,
@@ -173,7 +187,7 @@ export class Processor extends TaskProcessor<FormSchema, Comment[]> {
         }
         // 继续获取其他子评论
         const list = await this.getNoteSubComments(
-            noteId,
+            postParam,
             rootCommentId,
             commentPage.cursor,
             limit - count,

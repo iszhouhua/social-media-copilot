@@ -8,12 +8,12 @@ import { z } from "zod";
 import { Processor } from "./processor";
 import { TaskDialog } from "@/components/task";
 import { LimitPerIdFormField } from "@/components/form-field/limit-per-id";
-import { parsePostId } from "../post";
+import { parsePostParam } from "../post/parse-post-id";
 import { TextareaArrayFormField, textareaArrayTransform } from "@/components/form-field/textarea-array";
 
 const formSchema = z.object({
     limitPerId: z.coerce.number().min(1, "请输入需要导出的评论数量"),
-    postIds: z.string().array().or(z.string().trim().min(1, "需要导出的数据不能为空").transform((arg, ctx) => textareaArrayTransform(arg, ctx, parsePostId))),
+    postParams: z.string().trim().min(1, "需要导出的数据不能为空").transform((arg, ctx) => textareaArrayTransform(arg, ctx, parsePostParam)),
 });
 
 export type FormSchema = z.infer<typeof formSchema>;
@@ -38,7 +38,7 @@ export default (props: {
         resolver: zodResolver(formSchema),
         defaultValues: {
             limitPerId: post?.commentCount || parseInt(localStorage.getItem(storageKey) ?? "100"),
-            postIds: post ? [post.postId] : []
+            postParams: post ? location.href : ''
         }
     });
 
@@ -54,15 +54,15 @@ export default (props: {
         <DialogContent className="max-w-[600px]" aria-describedby={undefined}>
             <DialogHeader>
                 <DialogTitle>
-                    {post ? <>导出笔记<span className="text-red-400">{post.title}</span>的评论数据</> : <>根据笔记ID或链接批量导出笔记评论</>}</DialogTitle>
+                    {post ? <>导出笔记<span className="text-red-400">{post.title}</span>的评论数据</> : <>根据笔记链接批量导出笔记评论</>}</DialogTitle>
             </DialogHeader>
             <Form {...form}>
                 <form className="space-y-6 py-4">
                     {!post && <TextareaArrayFormField
                         control={form.control}
-                        name="postIds"
-                        label="笔记ID或链接"
-                         description="支持输入笔记ID或链接，可使用App分享链接"
+                        name="postParams"
+                        label="笔记链接"
+                        description="支持输入笔记链接，可使用App分享链接"
                     />}
                     <LimitPerIdFormField
                         control={form.control}

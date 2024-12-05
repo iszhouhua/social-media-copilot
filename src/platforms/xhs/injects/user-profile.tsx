@@ -59,7 +59,6 @@ const Component = (props: {
 
   return (<>
     <Logo />
-    <Button onClick={() => window.open(`https://pgy.xiaohongshu.com/solar/pre-trade/blogger-detail/${userId}`)}>前往蒲公英主页</Button>
     <Button onClick={copyUserData}>复制博主信息</Button>
     <Button onClick={handlerOpenExportDialog}>导出笔记数据</Button>
   </>);

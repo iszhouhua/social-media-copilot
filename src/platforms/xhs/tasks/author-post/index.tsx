@@ -51,14 +51,14 @@ export default (props: {
         <DialogContent className="max-w-[600px]" aria-describedby={undefined}>
             <DialogHeader>
                 <DialogTitle>
-                    {author ? <>导出<span className="text-red-400">{author.authorName}</span>的笔记数据</> : <>根据博主ID或链接批量导出笔记数据</>}
+                    {author ? <>导出<span className="text-red-400">{author.authorName}</span>的笔记数据</> : <>根据博主链接批量导出笔记数据</>}
                 </DialogTitle>
             </DialogHeader>
             <Form {...form}>
                 <form className="space-y-6 py-4">
                     {!author && <TextareaArrayFormField
                         control={form.control}
-                        name="authorIds" label="博主ID或链接" />}
+                        name="authorIds" label="博主链接" />}
                     <LimitPerIdFormField
                         control={form.control}
                         name="limitPerId"

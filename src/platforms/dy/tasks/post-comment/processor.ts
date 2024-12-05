@@ -115,6 +115,7 @@ export class Processor extends TaskProcessor<FormSchema, http.comment.Comment[]>
                 count: 20,
                 item_type: 0,
             });
+            if (!commentPage.comments) break;
             // 增加评论数
             commentList.push(...commentPage.comments);
             cursor = commentPage.cursor;
@@ -176,6 +177,7 @@ export class Processor extends TaskProcessor<FormSchema, http.comment.Comment[]>
                 count: 20,
                 item_type: 0,
             });
+            if (!commentPage.comments) break;
             commentReplies.push(...commentPage.comments);
             // 更新进度
             this.actions.setCompleted(prev => prev + commentPage.comments.length);

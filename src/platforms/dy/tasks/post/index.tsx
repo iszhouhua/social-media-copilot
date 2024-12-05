@@ -41,7 +41,7 @@ export default () => {
                 <form className="space-y-6 py-4">
                     <TextareaArrayFormField
                         control={form.control}
-                        name="postIds" label="视频ID或链接" description="支持输入视频ID或链接，可使用App分享链接"/>
+                        name="postIds" label="视频链接" description="支持输入视频链接，可使用App分享链接"/>
                         
                     <MaterialTypesFormField control={form.control} name="materialTypes" items={[
                         { label: "视频/图集", value: "video", required: true },

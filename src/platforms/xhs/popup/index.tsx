@@ -9,9 +9,9 @@ export default (props: PopupProps) => {
         <Item icon={BookText} title='批量导出博主信息'
             onClick={() => onOpenDialog("author")} />
         <CollapsibleItem icon={Contact} title='批量导出笔记数据'>
-            <Item icon={Book} title='根据笔记ID或链接导出'
+            <Item icon={Book} title='根据笔记链接导出'
                 onClick={() => onOpenDialog("post")} />
-            <Item icon={BookText} title='根据博主ID或链接导出'
+            <Item icon={BookText} title='根据博主链接导出'
                 onClick={() => onOpenDialog("author-post")} />
         </CollapsibleItem>
         <Item icon={MessageSquareText} title='批量导出笔记评论'

@@ -1,10 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { throttle } from "lodash";
-import { xingtu, user } from "@/platforms/dy/http";
+import { user } from "@/platforms/dy/http";
 import { toast } from "sonner";
 import { Logo } from "@/components/logo";
 import copy from "copy-to-clipboard";
-import { defineInjectContentScriptUi } from "@/utils/inject";
 
 const Component = (props: {
     userId: string
@@ -21,30 +20,6 @@ const Component = (props: {
         const userProfile = await user.userProfileOther(userId);
         setUserInfo(userProfile.user);
         return userProfile.user;
-    }
-
-    const handlerOpenXingtu = async () => {
-        try {
-            const userInfo = await getUserInfo();
-            if (!userInfo.official_cooperation) {
-                toast.warning("当前达人尚未入驻星图，无法前往");
-                return
-            }
-            let tempId = starId;
-            if (!tempId) {
-                // 仅第一次请求时从接口获取数据
-                const xtInfo = await xingtu.entranceAuthorInfo(userInfo.uid);
-                if (!xtInfo.id) {
-                    throw new Error(xtInfo.base_resp?.status_message || "获取星图信息失败");
-                }
-                tempId = xtInfo.id;
-                setStarId(xtInfo.id);
-            }
-            window.open(`https://www.xingtu.cn/ad/creator/author/douyin/${tempId}/1`);
-        } catch (err: any) {
-            console.error(err);
-            toast.error(`达人信息获取失败:${err.message}`);
-        }
     }
 
     const handlerOpenExportDialog = () => {
@@ -77,7 +52,6 @@ const Component = (props: {
 
     return (<>
         <Logo />
-        <Button onClick={throttle(handlerOpenXingtu, 2000)}>前往星图主页</Button>
         <Button onClick={throttle(copyUserData, 2000)}>复制达人信息</Button>
         <Button onClick={throttle(handlerOpenExportDialog, 2000)}>导出视频数据</Button>
     </>);

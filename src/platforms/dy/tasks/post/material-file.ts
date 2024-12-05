@@ -10,17 +10,12 @@ export function getMaterialFiles(aweme: AwemeDetail, materialTypes: string[], pa
     if (aweme.media_type === 2) {
         const images: TaskFileInfo[] = aweme.images.map((value, index) => {
             return {
-                filename: `图${index + 1}.jpeg`,
+                filename: `${name}-图${index + 1}.jpeg`,
                 type: 'url',
                 data: value.url_list.reverse()[0],
             };
         });
-        fileInfos.push({
-            filename: name + '.zip',
-            path,
-            type: 'zip',
-            data: images,
-        });
+        fileInfos.push(...images);
     } else {
         const url = aweme.video?.play_addr?.url_list?.[0];
         if (url) {

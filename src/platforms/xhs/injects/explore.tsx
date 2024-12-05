@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import JSZip from "jszip";
 import copy from "copy-to-clipboard";
 import { toast } from "sonner";
 import { throttle } from "lodash";
@@ -35,33 +34,24 @@ const Component = (props: {
   const exportMedia = async () => {
     const note = await getNoteCard();
     const filename = (note.title || noteId) + (note.type == "video" ? ".mp4" : ".zip");
-    let url: string;
     if (note.type == "video") {
-      const hosts = ["https://sns-video-bd.xhscdn.com/", "https://sns-video-hw.xhscdn.com/"];
-      const randomIndex = Math.floor(Math.random() * hosts.length);
       const videoKey = note.video?.consumer?.origin_video_key;
-      url = hosts[randomIndex] + videoKey;
+      const url = "https://sns-video-bd.xhscdn.com/" + videoKey;
+      await browser.runtime.sendMessage<"download">({ name: "download", body: { url, filename } });
     } else {
-      const zip = new JSZip();
       note.image_list.forEach((item, index) => {
         const image = item.url_default || item.url_pre;
-        const imageData = fetch(image).then((res) => res.blob());
-        zip.file(`图${index + 1}.jpg`, imageData, { binary: true });
+        browser.runtime.sendMessage<"download">({ name: "download", body: { url: image, filename: (note.title || noteId) + `图${index + 1}.jpg` } });
         if (item.live_photo) {
           for (const key of Object.keys(item.stream)) {
             const liveUrl = item.stream?.[key]?.[0]?.master_url;
             if (liveUrl) {
-              const liveData = fetch(liveUrl).then((res) => res.blob());
-              zip.file(`图${index + 1}.mp4`, liveData, { binary: true });
+              browser.runtime.sendMessage<"download">({ name: "download", body: { url: liveUrl, filename: (note.title || noteId) + `图${index + 1}.mp4` } });
             }
           };
         }
       });
-      const blob = await zip.generateAsync({ type: "blob" });
-      url = URL.createObjectURL(blob);
     }
-    await browser.runtime.sendMessage<"download">({ name: "download", body: { url, filename } });
-    URL.revokeObjectURL(url);
   };
 
   const copyContent = async () => {

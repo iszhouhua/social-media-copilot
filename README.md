@@ -23,13 +23,9 @@
 
 - **Chrome**：<https://chrome.google.com/webstore/detail/dbichmdlbjdeplpkhcejgkakobjbjalc>
 - **Edge**：<https://microsoftedge.microsoft.com/addons/detail/gneijakmdhgakglgogbpldbjhbeddibj>
-- **其他浏览器**：下载最新版的[social-media-copilot.crx](https://github.com/iszhouhua/social-media-copilot/releases/latest/download/social-media-copilot.crx)或[social-media-copilot.zip](https://github.com/iszhouhua/social-media-copilot/releases/latest/download/social-media-copilot.zip)文件，手动加载到浏览器中
+- **其他浏览器**：下载最新版的[social-media-copilot.crx](https://github.com/iszhouhua/social-media-copilot/releases/latest/download/social-media-copilot.crx)文件，手动加载到浏览器中
 
-### 具体功能介绍
-
-- [小红书](docs/小红书.md)
-
-- [抖音](docs/抖音.md)
+[点击查看详细文档](https://ocn0jsywtv09.feishu.cn/wiki/space/7441517360869064705)
 
 ## 二次开发
 
@@ -46,7 +42,7 @@ pnpm dev
 
 项目运行后会自动打开本机的Chrome浏览器，并自动加载插件代码。
 
-项目核心框架为[WXT](https://github.com/wxt-dev/wxt)，具体说明见：[WXT文档](https://wxt.dev)
+项目核心框架为[WXT](https://github.com/wxt-dev/wxt)，具体可见：[WXT文档](https://wxt.dev)
 
 ## 打赏
 
@@ -54,40 +50,39 @@ pnpm dev
 
 [点击前往打赏](https://alms.iszhouhua.com)
 
-## 交流群
+## 联系作者
 
-### Telegram交流群
+- Telegram交流群：[点击加入群组](https://t.me/SocialMediaCopilot)
 
-群组链接：[https://t.me/SocialMediaCopilot](https://t.me/SocialMediaCopilot)
+- QQ交流群：[839137339](https://smc.iszhouhua.com/image/qq-group-qr-code.jpg)
 
-### QQ交流群
+- 微信交流群：[点击扫码进群](https://smc.iszhouhua.com/image/wechat-group-qr-code.jpg)
 
-<img width="400px" src="https://smc.iszhouhua.com/image/qq-group-qr-code.jpg" />
+- 作者邮箱：<andy_zh@foxmail.com>
 
-### 微信交流群
+- 作者微信：[iszhouhua](https://smc.iszhouhua.com/image/wechat-qr-code.jpg)
 
-<img width="400px" src="https://smc.iszhouhua.com/image/wechat-group-qr-code.jpg" />
+> 添加微信请记得备注来意！
 
-> 如二维码已失效，可加作者微信。记得备注来意
+## ⚠️ 免责声明
 
-<img width="400px" src="https://smc.iszhouhua.com/image/wechat-qr-code.jpg" />
+本项目仅供学习和研究目的，不得用于任何商业活动。用户在使用本项目时应遵守所在地区的法律法规，对于违法使用所导致的后果，本项目及作者不承担任何责任。
 
-## 常见问题
+本项目可能存在未知的缺陷和风险（包括但不限于设备损坏和账号封禁等），使用者应自行承担使用本项目所产生的所有风险及责任。 作者不保证本项目的准确性、完整性、及时性、可靠性，也不承担任何因使用本项目而产生的任何损失或损害责任。
 
-### 数据采集原理
-
-社媒助手采集数据是通过直接调用平台API接口，拿到数据后进行汇总下载/导出。
-受各平台风控影响，频繁使用插件进行数据采集，可能会被平台限制。可尝试通过重新登录、切换账号等方式以继续使用。
-
-## 免责声明
-
-本项目仅供学习和研究目的，不得用于任何商业活动。用户在使用本项目时应遵守所在地区的法律法规，对于违法使用所导致的后果，本项目及作者不承担任何责任。 本项目可能存在未知的缺陷和风险（包括但不限于设备损坏和账号封禁等），使用者应自行承担使用本项目所产生的所有风险及责任。 作者不保证本项目的准确性、完整性、及时性、可靠性，也不承担任何因使用本项目而产生的任何损失或损害责任。 使用本项目即表示您已阅读并同意本免责声明的全部内容。
+使用本项目即表示您已阅读并同意本免责声明的全部内容。如果您对上述声明有任何疑问或不同意，请不要使用本项目的代码和功能。如果您使用了本项目的代码和功能，则视为您已完全理解并接受上述免责声明，并自愿承担使用本项目的一切风险和后果。
 
 本项目的知识产权归开发者所有。本项目受到著作权法和国际著作权条约以及其他知识产权法律和条约的保护。用户在遵守本声明及相关法律法规的前提下，可以下载和使用本项目。
 
 关于本项目的最终解释权归开发者所有。开发者保留随时更改或更新本免责声明的权利。
 
 ## 版本更新记录
+
+### v0.0.6
+
+- 修复小红书改版后评论导出功能不可用的问题
+- 导出笔记/视频数据时，已删除的笔记/视频保留空行
+- 支持国际化
 
 ### v0.0.5
 
@@ -106,7 +101,7 @@ pnpm dev
 ### v0.0.2
 
 - 支持小红书和抖音平台一键跳转到商业平台
-- 支持小红书和抖音平台根据创作者ID或链接导出创作者信息和作品数据
+- 支持小红书和抖音平台根据创作者链接导出创作者信息和作品数据
 - 在小红书和抖音平台的博主/达人详情页植入便捷操作
 
 ### v0.0.1

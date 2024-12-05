@@ -56,15 +56,15 @@ export default (props: {
         <DialogContent className="max-w-[600px]" aria-describedby={undefined}>
             <DialogHeader>
                 <DialogTitle>
-                    {post ? <>导出视频<span className="text-red-400">{post.title?.length > 20 ? post.title.substring(0, 20) + '...' : post.title}</span>的评论数据</> : <>根据视频ID或链接批量导出视频评论</>}</DialogTitle>
+                    {post ? <>导出视频<span className="text-red-400">{post.title?.length > 20 ? post.title.substring(0, 20) + '...' : post.title}</span>的评论数据</> : <>根据视频链接批量导出视频评论</>}</DialogTitle>
             </DialogHeader>
             <Form {...form}>
                 <form className="space-y-6 py-4">
                     {!post && <TextareaArrayFormField
                         control={form.control}
                         name="postIds"
-                        label="视频ID或链接"
-                        description="支持输入视频ID或链接，可使用App分享链接"
+                        label="视频链接"
+                        description="支持输入视频链接，可使用App分享链接"
                     />}
                     <LimitPerIdFormField
                         control={form.control}

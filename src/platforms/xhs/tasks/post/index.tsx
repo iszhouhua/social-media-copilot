@@ -28,7 +28,7 @@ export default () => {
         resolver: zodResolver(formSchema),
         defaultValues: {
             needMedia: false,
-            postParams: []
+            postParams: ''
         }
     });
 

@@ -9,7 +9,7 @@ export default (props: PopupProps) => {
         <Item icon={BookText} title='批量导出达人信息'
             onClick={() => onOpenDialog("author")} />
         <CollapsibleItem icon={Contact} title='批量导出视频数据'>
-            <Item icon={Book} title='根据视频ID或链接导出'
+            <Item icon={Book} title='根据视频链接导出'
                 onClick={() => onOpenDialog("post")} />
             <Item icon={BookText} title='根据达人链接导出'
                 onClick={() => onOpenDialog("author-post")} />
