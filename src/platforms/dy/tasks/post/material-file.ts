@@ -10,7 +10,7 @@ export function getMaterialFiles(aweme: AwemeDetail, materialTypes: string[], pa
     if (aweme.media_type === 2) {
         const images: TaskFileInfo[] = aweme.images.map((value, index) => {
             return {
-                filename: `${name}-图${index + 1}.jpeg`,
+                filename: `${name}-图${index + 1}.png`,
                 type: 'url',
                 data: value.url_list.reverse()[0],
             };
@@ -32,7 +32,7 @@ export function getMaterialFiles(aweme: AwemeDetail, materialTypes: string[], pa
         const url = aweme.video?.cover?.url_list?.reverse()?.[0];
         if (url) {
             fileInfos.push({
-                filename: name + '.jpeg',
+                filename: name + '.png',
                 type: 'url',
                 data: url,
                 path,

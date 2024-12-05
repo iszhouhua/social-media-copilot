@@ -12,10 +12,12 @@ import { TaskDialog } from "@/components/task";
 import { LimitPerIdFormField } from "@/components/form-field/limit-per-id";
 import { parsePostId } from "../post";
 import { TextareaArrayFormField, textareaArrayTransform } from "@/components/form-field/textarea-array";
+import { NeedMediaFormField } from "@/components/form-field/need-media";
 
 const formSchema = z.object({
     limitPerId: z.coerce.number().min(1, "请输入需要导出的评论数量"),
     postIds: z.string().array().or(z.string().trim().min(1, "需要导出的数据不能为空").transform((arg, ctx) => textareaArrayTransform(arg, ctx, parsePostId))),
+    needMedia: z.boolean().default(false).optional(),
 });
 
 export type FormSchema = z.infer<typeof formSchema>;
@@ -40,7 +42,8 @@ export default (props: {
         resolver: zodResolver(formSchema),
         defaultValues: {
             limitPerId: post?.commentCount || parseInt(localStorage.getItem(storageKey) ?? "100"),
-            postIds: post ? [post.postId] : []
+            postIds: post ? [post.postId] : [],
+            needMedia: false,
         }
     });
 
@@ -70,6 +73,7 @@ export default (props: {
                         control={form.control}
                         name="limitPerId"
                         description={post ? `当前视频共有${post.commentCount}条评论` : '每条视频需要导出的评论数量'} />
+                    <NeedMediaFormField name="needMedia" control={form.control} label="下载评论图片" />
                 </form>
             </Form>
             <DialogFooter>

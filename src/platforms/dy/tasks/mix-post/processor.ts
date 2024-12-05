@@ -97,17 +97,12 @@ export class Processor extends TaskProcessor<FormSchema, http.aweme.AwemeDetail>
         if (aweme.media_type === 2) {
             const images: TaskFileInfo[] = aweme.images.map((value, index) => {
                 return {
-                    filename: `图${index + 1}.jpeg`,
+                    filename: `${name}-图${index + 1}.png`,
                     type: 'url',
                     data: value.url_list.reverse()[0],
                 };
             });
-            fileInfos.push({
-                filename: name + '.zip',
-                path: mixName,
-                type: 'zip',
-                data: images,
-            });
+            fileInfos.push(...images);
         } else {
             const url = aweme.video?.play_addr?.url_list?.[0];
             if (url) {
@@ -124,7 +119,7 @@ export class Processor extends TaskProcessor<FormSchema, http.aweme.AwemeDetail>
             const url = aweme.video?.cover?.url_list?.reverse()?.[0];
             if (url) {
                 fileInfos.push({
-                    filename: name + '.jpeg',
+                    filename: name + '.png',
                     type: 'url',
                     data: url,
                     path: mixName,

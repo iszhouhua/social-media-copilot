@@ -27,21 +27,13 @@ export class Processor extends PostProcessor<FormSchema & {
                 if (!note.note_id) {
                     throw new Error('笔记ID获取失败，请检查小红书账号是否已登录！');
                 }
-                const post: any = await this.request(webV1Feed, note.note_id, 'pc_user', note.xsec_token, ['jpg']);
+                const post: any = await this.request(webV1Feed, note.note_id, 'pc_user', note.xsec_token);
                 postParams.push({ id: note.note_id, token: note.xsec_token, source: 'pc_user' });
                 this.data[note.note_id] = post;
                 this.actions.setCompleted(prev => prev + 1);
             }
         }
         this.condition.postParams = postParams;
-    }
-
-
-
-    getMediaFile(noteCard: NoteCard): TaskFileInfo {
-        const fileInfo = super.getMediaFile(noteCard);
-        fileInfo.path = noteCard.user?.nickname;
-        return fileInfo;
     }
 
     /**

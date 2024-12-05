@@ -24,7 +24,7 @@ export class Processor extends TaskProcessor<FormSchema, Comment[]> {
     }
 
     async getFileInfos(): Promise<Array<TaskFileInfo>> {
-        const { postParams } = this.condition;
+        const { postParams, needMedia } = this.condition;
         const dataList = [[
             '评论ID',
             '笔记ID',
@@ -43,6 +43,7 @@ export class Processor extends TaskProcessor<FormSchema, Comment[]> {
             '引用的用户ID',
             '引用的用户名称',
         ]];
+        const medias: TaskFileInfo[] = [];
         const getRow = (comment: Comment | SubComment, postParam: {
             id: string;
             source: string;
@@ -59,6 +60,17 @@ export class Processor extends TaskProcessor<FormSchema, Comment[]> {
             );
             row.push(comment.content);
             row.push(comment.pictures?.map((o) => o.url_default)?.join('\n'));
+            if (needMedia) {
+                medias.push(...comment.pictures?.map((o,index) => {
+                    const info: TaskFileInfo = {
+                        path: comment.note_id,
+                        filename: `${comment.id}-图${index+1}.png`,
+                        type: "url",
+                        data: o.url_default
+                    }
+                    return info;
+                }) || []);
+            }
             row.push(comment.create_time && new Date(comment.create_time));
             row.push(comment.like_count);
             row.push(
@@ -85,7 +97,7 @@ export class Processor extends TaskProcessor<FormSchema, Comment[]> {
                 }
             }
         }
-        return [this.getExcelFileInfo(dataList, "小红书-笔记评论导出")];
+        return [this.getExcelFileInfo(dataList, "小红书-笔记评论导出"), ...medias];
     }
 
     /**

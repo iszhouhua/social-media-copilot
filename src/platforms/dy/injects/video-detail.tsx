@@ -22,11 +22,10 @@ export const Component = (props: {
     }
     if (aweme.media_type === 2) {
       aweme.images?.map((item) => item.url_list.reverse()[0]).forEach((image, index) => {
-        browser.runtime.sendMessage<"download">({ name: "download", body: { url: image, filename: (aweme.desc || aweme.aweme_id) + `-图${index + 1}.jpeg` } });
+        browser.runtime.sendMessage<"download">({ name: "download", body: { url: image, filename: (aweme.desc || aweme.aweme_id) + `-图${index + 1}.png` } });
       });
     } else if (aweme.media_type === 4) {
-      const vid = aweme.video.play_addr.uri;
-      const url = `https://aweme.snssdk.com/aweme/v1/play/?video_id=${vid}`;
+      const url = aweme.video?.play_addr?.url_list?.[0];
       await browser.runtime.sendMessage<"download">({ name: "download", body: { url, filename: (aweme.desc || aweme.aweme_id) + ".mp4" } });
     }
   };

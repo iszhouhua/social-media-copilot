@@ -21,7 +21,7 @@ const Component = (props: {
       if (!xsec_token) {
         throw new Error("笔记信息获取失败，缺少xsec_token参数！");
       }
-      const detail = await webV1Feed(noteId, search.get("source") || "pc_feed", xsec_token, ["jpg"])
+      const detail = await webV1Feed(noteId, search.get("source") || "pc_feed", xsec_token)
         .then(res => res.items?.[0]?.note_card);
       setNoteCard(detail);
       return detail;
@@ -33,7 +33,7 @@ const Component = (props: {
 
   const exportMedia = async () => {
     const note = await getNoteCard();
-    const filename = (note.title || noteId) + (note.type == "video" ? ".mp4" : ".zip");
+    const filename = (note.title || noteId);
     if (note.type == "video") {
       const videoKey = note.video?.consumer?.origin_video_key;
       const url = "https://sns-video-bd.xhscdn.com/" + videoKey;
@@ -41,7 +41,7 @@ const Component = (props: {
     } else {
       note.image_list.forEach((item, index) => {
         const image = item.url_default || item.url_pre;
-        browser.runtime.sendMessage<"download">({ name: "download", body: { url: image, filename: (note.title || noteId) + `图${index + 1}.jpg` } });
+        browser.runtime.sendMessage<"download">({ name: "download", body: { url: image, filename: (note.title || noteId) + `图${index + 1}.png` } });
         if (item.live_photo) {
           for (const key of Object.keys(item.stream)) {
             const liveUrl = item.stream?.[key]?.[0]?.master_url;

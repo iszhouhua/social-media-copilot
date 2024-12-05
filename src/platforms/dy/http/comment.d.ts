@@ -42,6 +42,7 @@ interface BaseComment {
             width: number;
         };
     }>;
+    sticker:any;
     reply_id: string;
     reply_to_reply_id: string;
 }

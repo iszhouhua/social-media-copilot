@@ -24,7 +24,7 @@ export class Processor extends TaskProcessor<FormSchema, http.comment.Comment[]>
 
 
     async getFileInfos(): Promise<Array<TaskFileInfo>> {
-        const { postIds } = this.condition;
+        const { postIds, needMedia } = this.condition;
         const dataList: any[][] = [[
             '评论ID',
             '视频ID',
@@ -44,6 +44,7 @@ export class Processor extends TaskProcessor<FormSchema, http.comment.Comment[]>
             '引用的用户UID',
             '引用的用户名称',
         ]];
+        const medias: TaskFileInfo[] = [];
         const getRow = (comment: http.comment.Comment | http.comment.ReplyComment): Array<any> => {
             const row = [];
             row.push(comment.cid);
@@ -54,11 +55,32 @@ export class Processor extends TaskProcessor<FormSchema, http.comment.Comment[]>
             row.push(comment.user?.nickname);
             row.push(`https://www.douyin.com/user/${comment.user?.sec_uid}`);
             row.push(comment.text);
+            const static_url = comment?.sticker?.static_url?.url_list?.reverse()?.[0];
             row.push(
-                comment.image_list
+                static_url || comment.image_list
                     ?.map((o) => o.origin_url.url_list.reverse()[0])
                     ?.join('\n'),
             );
+
+            if (needMedia) {
+                comment.image_list?.forEach((o, index) => {
+                    const name = `${comment.text?.replaceAll('/', '')?.substring(0, 20)}-${comment.cid}-图${index + 1}.png`
+                    medias.push({
+                        path: comment.aweme_id,
+                        filename: name,
+                        type: 'url',
+                        data: o.origin_url.url_list.reverse()[0],
+                    });
+                });
+                if (static_url) {
+                    medias.push({
+                        path: comment.aweme_id,
+                        filename: `${comment.text?.replaceAll('/', '')?.substring(0, 20)}-${comment.cid}.png`,
+                        type: 'url',
+                        data: static_url
+                    });
+                }
+            }
             row.push(comment.create_time && new Date(comment.create_time * 1000));
             row.push(comment.digg_count);
             row.push(
@@ -88,7 +110,7 @@ export class Processor extends TaskProcessor<FormSchema, http.comment.Comment[]>
                 }
             }
         }
-        return [this.getExcelFileInfo(dataList, "抖音-视频评论导出")];
+        return [this.getExcelFileInfo(dataList, "抖音-视频评论导出"),...medias];
     }
 
 

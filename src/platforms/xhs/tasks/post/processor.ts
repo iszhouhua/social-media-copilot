@@ -10,7 +10,7 @@ export class Processor<P extends FormSchema> extends TaskProcessor<P, WebV1Feed>
         this.actions.setTotal(postParams.length);
         for (let i = 0; i < postParams.length; i++) {
             const postParam = postParams[i];
-            const post = await this.request(webV1Feed, postParam.id, postParam.source, postParam.token, ['jpg']);
+            const post = await this.request(webV1Feed, postParam.id, postParam.source, postParam.token);
             this.data[postParam.id] = post;
             this.actions.setCompleted(prev => prev + 1);
         }
@@ -83,7 +83,7 @@ export class Processor<P extends FormSchema> extends TaskProcessor<P, WebV1Feed>
             const images: Array<TaskFileInfo> = noteCard.image_list.flatMap(
                 (value, index) => {
                     let list: Array<TaskFileInfo> = [{
-                        filename: `${name}-图${index + 1}.jpg`,
+                        filename: `${name}-图${index + 1}.png`,
                         type: 'url',
                         data: value.url_default,
                     }];

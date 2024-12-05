@@ -35,6 +35,7 @@ async function executeScript(code: string, sender: Runtime.MessageSender) {
     // @ts-ignore
     world: "MAIN",
     target: { tabId: sender.tab?.id! },
+    // @ts-ignore
     func: (code) => new Function(code)(),
     args: [code]
   });
