@@ -1,8 +1,7 @@
-import icon from "@/public/icon/32.png";
-import { sendMessage } from "@/utils/messaging/extension";
+import icon from "@/assets/icons/logo.png";
 
 export function Logo() {
-  return (<img src={icon} className="hover:cursor-pointer" alt={i18n.t('name')} onClick={() => {
-    sendMessage("openPopup", undefined);
-  }}></img>);
+    return (<img src={icon} alt="社媒助手" onClick={() => {
+        browser.runtime.sendMessage<"openPopup">({ name: "openPopup" });
+      }}></img>);
 }

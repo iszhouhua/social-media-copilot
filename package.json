@@ -1,7 +1,7 @@
 {
   "name": "social-media-copilot",
   "private": true,
-  "version": "0.0.6",
+  "version": "0.0.5",
   "type": "module",
   "author": "Andy Zhou <andy_zh@foxmail.com>",
   "engines": {
@@ -29,11 +29,8 @@
     "@radix-ui/react-progress": "^1.1.0",
     "@radix-ui/react-separator": "^1.1.0",
     "@radix-ui/react-slot": "^1.1.0",
-    "@radix-ui/react-switch": "^1.1.1",
-    "@webext-core/messaging": "^2.1.0",
     "aria-hidden": "v1.2.1",
     "axios": "^1.7.3",
-    "bowser": "^2.11.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "copy-to-clipboard": "^3.3.3",
@@ -56,12 +53,11 @@
     "@types/lodash": "^4.17.7",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@wxt-dev/i18n": "^0.2.3",
-    "@wxt-dev/module-react": "^1.1.1",
+    "@wxt-dev/module-react": "^1.0.0",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.39",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.5.2",
-    "wxt": "^0.19.14"
+    "wxt": "^0.18.10"
   }
 }
