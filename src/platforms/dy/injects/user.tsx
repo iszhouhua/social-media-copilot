@@ -4,13 +4,13 @@ import { user } from "@/platforms/dy/http";
 import { toast } from "sonner";
 import { Logo } from "@/components/logo";
 import copy from "copy-to-clipboard";
+import ReactDOM from "react-dom/client";
 
-const Component = (props: {
+const App = (props: {
     userId: string
 }) => {
     const { userId } = props;
     const [userInfo, setUserInfo] = useState<user.UserInfo>();
-    const [starId, setStarId] = useState<string>("");
     const taskDialog = useTaskDialog('author-post');
 
 
@@ -57,23 +57,20 @@ const Component = (props: {
     </>);
 };
 
-export default defineInjectContentScriptUi({
+const options: SmcContentScriptUiOptions = {
     position: "inline",
-    className: "max-w-[1208px] my-[20px] mx-auto flex gap-4",
     anchor: "//div[@data-e2e='user-info']/..",
     append: "after",
-    isMatch: () => location.pathname.startsWith('/user/'),
-    async onMount({ mounted, remove }) {
+    isMatch: (url: URL) =>  url.pathname.startsWith('/user/'),
+    onMount: (container: HTMLElement) => {
+        container.className = "max-w-[1208px] my-[20px] mx-auto flex gap-4";
+        const root = ReactDOM.createRoot(container);
         let userId = location.pathname.split("/")[2];
-        if (userId === 'self') {
-            userId = await browser.runtime.sendMessage<"executeScript">({
-                name: "executeScript",
-                body: "return window.SSR_RENDER_DATA?.app?.user?.info?.secUid;"
-            });
-        }
-        if (!userId || !userId.startsWith('MS4wLjABAAAA')) {
-            return remove();
-        }
-        mounted.render(<Component userId={userId} />);
+        root.render(<App userId={userId} />);
+        return root;
+    },
+    onRemove: (root: ReactDOM.Root) => {
+        root?.unmount();
     }
-});
+}
+export default options;

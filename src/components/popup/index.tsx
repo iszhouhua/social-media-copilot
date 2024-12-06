@@ -1,7 +1,7 @@
 import { Contact, Info, JapaneseYen, MessageSquare, MessageSquareText } from "lucide-react";
 import { CollapsibleItem, Item } from "./item";
 import { UnsupportedPlatform } from "./unsupported";
-import type { Platform } from "@/platforms";
+import platforms, { Platform } from "@/platforms";
 
 export const Popup = () => {
     const [platform, setPlatform] = useState<Platform>();
@@ -13,16 +13,10 @@ export const Popup = () => {
                 return;
             }
             setTabId(tab.id);
-            browser.scripting.executeScript({
-                target: { tabId: tab.id! },
-                func: () => window.platform,
-                args: []
-            }).then(injectionResults => {
-                const platform = injectionResults[0].result;
-                if (platform) {
-                    setPlatform(getPlatform(platform));
-                }
-            });
+            const platformCode = getPlatformCode(tab.url);
+            if(platformCode){
+                setPlatform(platforms[platformCode]);
+            }
         });
     }, []);
 
@@ -43,6 +37,6 @@ export const Popup = () => {
             <Item icon={MessageSquare} title="添加微信" onClick={() => window.open('https://smc.iszhouhua.com/image/wechat-qr-code.jpg')} />
         </CollapsibleItem>
         <Item icon={JapaneseYen} title="打赏作者" onClick={() => window.open('https://alms.iszhouhua.com')} />
-        <Item icon={Info} title="使用文档" onClick={() => window.open('https://ocn0jsywtv09.feishu.cn/wiki/space/7441517360869064705')} />
+        <Item icon={Info} title="使用文档" onClick={() => window.open('https://ocn0jsywtv09.feishu.cn/wiki/Hh5vwSfh6iONmkkgEk8cXD2WnSc')} />
     </div> : <UnsupportedPlatform />);
 };

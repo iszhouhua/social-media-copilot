@@ -74,7 +74,7 @@ export abstract class TaskProcessor<P = any, T = any> {
         return {
             data: new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }),
             type: 'blob',
-            filename: `社媒助手-${name}-${moment().format("YYYYMMDD-HHmmss")}.xlsx`,
+            filename: `${name}-${moment().format("YYYYMMDD-HHmmss")}.xlsx`,
         }
     }
 

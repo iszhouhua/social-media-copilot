@@ -53,7 +53,12 @@ export async function hash(content: string, algorithm: AlgorithmIdentifier = 'SH
     return hashHex;
 }
 
-
-export function getPlatform(platform?: typeof window.platform): Platform {
-    return platforms[platform || window.platform];
-  }
+export function getPlatformCode(urlStr = location.href) {
+    const hostname = new URL(urlStr).hostname;
+    switch (hostname) {
+        case "www.xiaohongshu.com":
+            return "xhs";
+        case "www.douyin.com":
+            return "dy";
+    }
+}

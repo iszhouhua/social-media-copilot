@@ -3,8 +3,9 @@ import { throttle } from "lodash";
 import { toast } from "sonner";
 import { aweme as api } from "@/platforms/dy/http";
 import { Logo } from "@/components/logo";
+import ReactDOM from "react-dom/client";
 
-export const Component = (props: {
+export const App = (props: {
   type: "video" | "note";
   awemeId: string;
   isMix?: boolean;
@@ -73,17 +74,34 @@ export const Component = (props: {
   </>);
 };
 
-// 视频详情页
-export default defineInjectContentScriptUi({
+const options: SmcContentScriptUiOptions = {
   position: "inline",
-  className: "flex gap-4 bg-transparent mr-8",
-  isMatch: () => /^\/(video|note)\/(\d+)$/.test(location.pathname),
-  anchor: "xg-right-grid",
+  anchor: () => {
+    const activeVideo = document.querySelectorAll('div[data-e2e="feed-active-video"] xg-right-grid');
+    return activeVideo?.length > 0 ? activeVideo[activeVideo.length - 1] : document.querySelector('xg-right-grid');
+  },
   append: "before",
-  async onMount({ mounted, remove }) {
+  isMatch: (url: URL) => /^\/(video|note)\/(\d+)$/.test(url.pathname) || !!url.searchParams.get('modal_id'),
+  onMount: (container: HTMLElement) => {
+    container.className = "flex gap-4 bg-transparent mr-8 z-50";
+    const root = ReactDOM.createRoot(container);
     const match = location.pathname.match(/^\/(video|note)\/(\d+)$/);
-    if (!match) return remove();
+    let type: any, awemeId: any;
+    if (match) {
+      type = match[1];
+      awemeId = match[2];
+    } else {
+      const activeVideo = document.querySelector("div[data-e2e=\"feed-active-video\"]");
+      if (!activeVideo) return root;
+      awemeId = activeVideo.getAttribute("data-e2e-vid");
+      type = activeVideo.querySelector(".account-card")?.textContent === "图文" ? "note" : "video";
+    }
     const awemeMix = document.querySelector('div[data-e2e="aweme-mix"]');
-    mounted.render(<Component type={match[1] as any} awemeId={match[2]} isMix={!!awemeMix} />);
+    root.render(<App type={type} awemeId={awemeId} isMix={!!awemeMix} />);
+    return root;
+  },
+  onRemove: (root: ReactDOM.Root) => {
+    root?.unmount();
   }
-});
+}
+export default options;

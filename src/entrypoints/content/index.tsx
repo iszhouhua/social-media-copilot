@@ -1,42 +1,46 @@
 import "~/assets/tailwind.css";
 import ReactDOM from "react-dom/client";
 import { App } from "./app";
-import { navigateListener } from "./listener";
-import { updateReference } from "./reference";
+import platforms, { type Platform } from "@/platforms";
 
 export default defineContentScript({
   matches: ["*://www.xiaohongshu.com/*", "*://www.douyin.com/*"],
   cssInjectionMode: "ui",
   async main(ctx) {
-    // 绑定当前上下文
-    window.context = ctx;
+    const platformCode = getPlatformCode();
+    if (!platformCode) return;
+    const platform: Platform = platforms[platformCode];
+    // 插入样式
+    // @ts-ignore
+    const url = browser.runtime.getURL(`/content-scripts/${import.meta.env.ENTRYPOINT}.css`);
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = url;
+    document.head.appendChild(link);
     // 通用内容
-    const ui = await createShadowRootUi(ctx, {
-      name: "social-media-copilot",
+    createIntegratedUi(ctx, {
       anchor: "html",
       position: "overlay",
-      zIndex: 2147483647,
-      isolateEvents: true,
-      onMount: (uiContainer: HTMLElement, shadow: ShadowRoot) => {
-        // 更新window引用
-        updateReference(shadow);
-        // 修正样式(sonner组件的样式会被注入到head中，将其移动到shadow之中)
-        const style = Array.from(document.head.querySelectorAll("style")).filter(o => o.textContent?.includes("data-sonner-toaster"))?.[0];
-        shadow.head.appendChild(style);
-        // 挂载
-        const common = document.createElement("div");
-        common.id = "root";
-        uiContainer.append(common);
-        const root = ReactDOM.createRoot(common);
-        root.render(<App />);
+      zIndex: 1000,
+      onMount: (container) => {
+        const root = ReactDOM.createRoot(container);
+        root.render(<App platform={platform} />);
         return root;
       },
       onRemove: (root) => {
         root?.unmount();
       }
+    }).mount();
+    const uiArray = platform.injects.map(options => {
+      return {
+        isMatch: options.isMatch,
+        ui: createIntegratedUi(ctx, options)
+      };
     });
-    ui.mount();
     // 监听url变化
-    navigateListener();
+    ctx.addEventListener(window, 'wxt:locationchange', ({ newUrl }) => {
+      uiArray.filter(ui => ui.isMatch(newUrl)).forEach(ui => ui.ui.mount());
+    });
+    waitFor(() => document.readyState === 'complete').then(() => uiArray.filter(ui => ui.isMatch(new URL(location.href))).forEach(ui => ui.ui.mount()));
   }
 });

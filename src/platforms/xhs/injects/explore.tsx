@@ -4,8 +4,9 @@ import { toast } from "sonner";
 import { throttle } from "lodash";
 import { Logo } from "@/components/logo";
 import { NoteCard, webV1Feed } from "../http/note";
+import ReactDOM from "react-dom/client";
 
-const Component = (props: {
+const App = (props: {
   noteId: string;
   isVideo: boolean;
 }) => {
@@ -83,22 +84,22 @@ const Component = (props: {
   </>);
 };
 
-export default defineInjectContentScriptUi({
+
+const options: SmcContentScriptUiOptions = {
   position: "inline",
-  append: "after",
-  className: "flex px-6 pb-[24px] gap-4",
-  isMatch: () => /^\/explore\/[a-zA-Z0-9]{24}$/.test(location.pathname),
   anchor: "#noteContainer > div.interaction-container > div.author-container",
-  async onMount({ mounted, remove }) {
-    const res = await browser.runtime.sendMessage<"executeScript">({
-      name: "executeScript",
-      body: "const noteId = location.pathname.split(\"/\")[2];return window[\"__INITIAL_STATE__\"]?.note?.noteDetailMap[noteId];"
-    });
-    const noteId = location.pathname.split("/").reverse()[0];
-    if (!noteId || noteId.length != 24) {
-      return remove();
-    }
-    const isVideo = !!document.querySelector('#noteContainer[data-type="video"]');
-    mounted.render(<Component noteId={noteId} isVideo={isVideo} />);
+  append: "after",
+  isMatch: (url: URL) =>  /^\/explore\/[a-zA-Z0-9]{24}$/.test(url.pathname),
+  onMount: (container: HTMLElement) => {
+      container.className = "flex px-6 pb-[24px] gap-4";
+      const root = ReactDOM.createRoot(container);
+      const noteId = location.pathname.split("/").reverse()[0];
+      const isVideo = !!document.querySelector('#noteContainer[data-type="video"]');
+      root.render(<App noteId={noteId} isVideo={isVideo} />);
+      return root;
+  },
+  onRemove: (root: ReactDOM.Root) => {
+      root?.unmount();
   }
-});
+}
+export default options;

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 import copy from "copy-to-clipboard";
 import { toast } from "sonner";
+import ReactDOM from "react-dom/client";
 
 type UserPageData = {
   basicInfo: {
@@ -29,18 +30,25 @@ type UserPageData = {
   }>
 }
 
-const Component = (props: {
+const App = (props: {
   userId: string
-  userPageData: UserPageData
 }) => {
-  const { userId, userPageData } = props;
+  const { userId } = props;
+  const [userPageData,setUserPageData] = useState<UserPageData>();
   const taskDialog = useTaskDialog('author-post');
 
+  useEffect(() => {
+    browser.runtime.sendMessage<"executeScript">({
+      name: "executeScript",
+      body: "const data = window[\"__INITIAL_STATE__\"].user.userPageData;return data._rawValue||data._value||data;"
+    }).then(setUserPageData);
+  }, []);
+
   const copyUserData = () => {
-    let content = `博主名称:${userPageData.basicInfo.nickname}
-    小红书号:${userPageData.basicInfo.redId}
-    粉丝数:${userPageData.interactions?.find(item => item.type === "fans")?.count}
-    个人简介:${userPageData.basicInfo.desc}`;
+    let content = `博主名称:${userPageData!.basicInfo.nickname}
+    小红书号:${userPageData!.basicInfo.redId}
+    粉丝数:${userPageData!.interactions?.find(item => item.type === "fans")?.count}
+    个人简介:${userPageData!.basicInfo.desc}`;
     if (copy(content)) {
       toast.success("复制成功");
     } else {
@@ -52,34 +60,31 @@ const Component = (props: {
     taskDialog.open({
       author: {
         authorId: userId,
-        authorName: userPageData.basicInfo.nickname,
+        authorName: userPageData!.basicInfo.nickname,
       }
     })
   }
 
-  return (<>
+  return (userPageData && <>
     <Logo />
     <Button onClick={copyUserData}>复制博主信息</Button>
     <Button onClick={handlerOpenExportDialog}>导出笔记数据</Button>
   </>);
 };
 
-export default defineInjectContentScriptUi({
+const options: SmcContentScriptUiOptions = {
   position: "inline",
-  className: "flex pt-[20px] gap-4",
-  isMatch: () => /^\/user\/profile\/[a-zA-Z0-9]{24}$/.test(location.pathname),
   anchor: "#userPageContainer .user-info .info-part .info",
-
-
-  async onMount({ mounted, remove }) {
-    const res = await browser.runtime.sendMessage<"executeScript">({
-      name: "executeScript",
-      body: "const data = window[\"__INITIAL_STATE__\"].user.userPageData;return data._rawValue||data._value||data;"
-    });
-    if (!res?.basicInfo) {
-      return remove();
-    }
-    const userId = location.pathname.split("/")[3];
-    mounted.render(<Component userId={userId} userPageData={res} />);
+  isMatch: (url: URL) =>  /^\/user\/profile\/[a-zA-Z0-9]{24}$/.test(url.pathname),
+  onMount: (container: HTMLElement) => {
+      container.className = "flex pt-[20px] gap-4";
+      const root = ReactDOM.createRoot(container);
+      const userId = location.pathname.split("/")[3];
+      root.render(<App userId={userId} />);
+      return root;
+  },
+  onRemove: (root: ReactDOM.Root) => {
+      root?.unmount();
   }
-});
+}
+export default options;

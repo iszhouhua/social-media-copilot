@@ -24,7 +24,7 @@ export default () => {
 
     const taskRef = useRef<React.ComponentRef<typeof TaskDialog>>(null);
 
-    const form = useForm<FormSchema>({
+    const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             needMedia: false,

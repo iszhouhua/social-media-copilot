@@ -36,7 +36,7 @@ export default (props: {
 
     const taskRef = useRef<React.ComponentRef<typeof TaskDialog>>(null);
 
-    const form = useForm<FormSchema>({
+    const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             limitPerId: post?.commentCount || parseInt(localStorage.getItem(storageKey) ?? "100"),

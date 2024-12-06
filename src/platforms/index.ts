@@ -4,7 +4,7 @@ export type PopupProps = { onOpenDialog: (name: string) => void }
 
 export interface Platform {
     http: AxiosInstance
-    injects: Array<InjectContentScriptUiOptions>
+    injects: Array<SmcContentScriptUiOptions>
     popup: (props: PopupProps) => JSX.Element
     tasks: Array<React.FC>
 }

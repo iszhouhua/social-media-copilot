@@ -1,23 +1,13 @@
-import { ContentScriptContext } from "wxt/client";
+import { ContentScriptContext, IntegratedContentScriptUiOptions } from "wxt/client";
 
 export { }
 
 declare global {
-    interface ShadowRoot {
-        head: Document['head'];
-        body: Document['body'];
-    }
-    interface Document {
-        shadow: ShadowRoot;
-    }
-    interface Window {
-        platform: 'xhs' | "dy";
-        context: ContentScriptContext;
-
-    }
-
-
     interface WindowEventMap {
         "task-dialog": CustomEvent<{ name: string; props?: Record<string, any>; }>;
     }
+
+    type SmcContentScriptUiOptions = IntegratedContentScriptUiOptions<ReactDOM.Root> & {
+        isMatch: (newUrl: URL) => boolean
+    };
 }
