@@ -8,7 +8,6 @@ export default defineConfig({
     name: '__MSG_extName__',
     description: '__MSG_extDescription__',
     default_locale: 'zh_CN',
-    minimum_chrome_version: "102",
     permissions: ["activeTab", "downloads", "scripting"],
     host_permissions: [
       "*://*.douyin.com/", "*://*.iesdouyin.com/",

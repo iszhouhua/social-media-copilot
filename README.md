@@ -1,6 +1,10 @@
 
 # 社媒助手
 
+日常工作中，经常会有从需要各社媒平台采集数据的场景，在使用量不大的情况下，手动处理，太麻烦，用其他产品，可能很贵或需要自己配置非常复杂的开发环境。
+
+所以，本人开发了社媒助手插件，只需在浏览器上安装此插件，即可实现数据采集的自给自足。无需进行任何额外的操作！
+
 社媒助手是一款在各个社媒平台提供各种辅助功能的浏览器插件，可运行在**Chrome**、**Edge**等所有基于**Chromium**内核开发的浏览器
 
 支持的平台和功能会陆续增加完善，如果本项目对你有帮助，请**star**支持一下！
@@ -11,21 +15,18 @@
 | :------: | :-----------------: | :----------------: | :----------------: | :------------------: | :------------------: |
 |  小红书  |          ✅          |         ✅          |         ✅          |          ✅           |          ✅           |
 |   抖音   |          ✅          |         ✅          |         ✅          |          ✅           |          ✅           |
-|   快手   |          ❌          |         ❌          |         ❌          |          ❌           |          ❌           |
-| 哔哩哔哩 |          ❌          |         ❌          |         ❌          |          ❌           |          ❌           |
-|   微博   |          ❌          |         ❌          |         ❌          |          ❌           |          ❌           |
-|   贴吧   |          ❌          |         ❌          |         ❌          |          ❌           |          ❌           |
-|   知乎   |          ❌          |         ❌          |         ❌          |          ❌           |          ❌           |
 
 ## 使用教程
 
 推荐优先使用商店版，如无法满足要求再使用开源版自行修改！
 
+> 由于种种原因，自0.0.7版本开始，不再开源完整代码，开源版保留的数据采集相关功能供大家学习和参考，新增功能将主要维护于商店版。
+
 - **Chrome**：<https://chrome.google.com/webstore/detail/dbichmdlbjdeplpkhcejgkakobjbjalc>
 - **Edge**：<https://microsoftedge.microsoft.com/addons/detail/gneijakmdhgakglgogbpldbjhbeddibj>
 - **其他浏览器**：下载最新版的[social-media-copilot.crx](https://github.com/iszhouhua/social-media-copilot/releases/latest/download/social-media-copilot.crx)文件，手动加载到浏览器中
 
-[点击查看详细文档](https://ocn0jsywtv09.feishu.cn/wiki/space/7441517360869064705)
+[点击查看相关文档](https://ocn0jsywtv09.feishu.cn/wiki/space/7441517360869064705)
 
 ## 二次开发
 
@@ -63,6 +64,10 @@ pnpm dev
 - 作者微信：[iszhouhua](https://smc.iszhouhua.com/image/wechat-qr-code.jpg)
 
 > 添加微信请记得备注来意！
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=iszhouhua/social-media-copilot&type=Date)](https://star-history.com/#iszhouhua/social-media-copilot&Date)
 
 ## ⚠️ 免责声明
 
