@@ -26,8 +26,6 @@
 - **Edge**：<https://microsoftedge.microsoft.com/addons/detail/gneijakmdhgakglgogbpldbjhbeddibj>
 - **其他浏览器**：下载最新版的[social-media-copilot.crx](https://github.com/iszhouhua/social-media-copilot/releases/latest/download/social-media-copilot.crx)文件，手动加载到浏览器中
 
-[点击查看相关文档](https://ocn0jsywtv09.feishu.cn/wiki/space/7441517360869064705)
-
 ## 二次开发
 
 项目运行需要`NodeJS`，请自行安装运行环境。
