@@ -1,4 +1,4 @@
-import { CollapsibleItem, Item } from "@/components/popup/item"
+import { CollapsibleItem, Item } from "@/entrypoints/popup/item"
 import { PopupProps } from "@/platforms";
 import { Book, BookText, Contact, MessageSquareText } from "lucide-react"
 

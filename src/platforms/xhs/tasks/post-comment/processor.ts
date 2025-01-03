@@ -63,7 +63,6 @@ export class Processor extends TaskProcessor<FormSchema, Comment[]> {
             if (needMedia) {
                 medias.push(...comment.pictures?.map((o,index) => {
                     const info: TaskFileInfo = {
-                        path: comment.note_id,
                         filename: `${comment.id}-图${index+1}.png`,
                         type: "url",
                         data: o.url_default

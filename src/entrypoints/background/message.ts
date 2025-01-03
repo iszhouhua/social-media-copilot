@@ -20,12 +20,7 @@ export default async function handleMessage(
         const regexp: RegExp = /[^\w\u4e00-\u9fa5\.\-\_]/g;
         // 替换掉特殊字符
         body.filename = "【社媒助手】" + body.filename.replace(regexp, "");
-        if (body.path) {
-          const path = body.path.replace(regexp, "");
-          body.filename = `${path}/${body.filename}`;
-        }
       }
-      delete body.path;
       return browser.downloads.download(body);
   }
 }

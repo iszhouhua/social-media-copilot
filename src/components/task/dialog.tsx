@@ -52,7 +52,7 @@ export const TaskDialog = React.forwardRef<{ start: StartFunc; }, { children: Re
             } else {
                 url = file.data;
             }
-            await browser.runtime.sendMessage<"download">({ name: "download", body: { url, filename: file.filename, path: file.path } });
+            await browser.runtime.sendMessage<"download">({ name: "download", body: { url, filename: file.filename } });
             URL.revokeObjectURL(url);
         }
     };

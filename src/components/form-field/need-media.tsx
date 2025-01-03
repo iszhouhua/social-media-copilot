@@ -23,7 +23,7 @@ export const NeedMediaFormField = <
                 <div className="space-y-1 leading-none">
                     <FormLabel>{label||'同时导出图片和视频'}</FormLabel>
                     <FormDescription>
-                        {import.meta.env.EDGE ? "请确认Edge下载设置中的”每次下载都询问我该做些什么“选项处于关闭状态。否则，下载区域会弹出很多“打开”和“另存为”的选项按钮。" : "请确认Chrome下载设置中的”下载前询问每个文件的保存位置“选项未被选中。否则，会弹出很多“另存为”对话框。"}
+                        请确认Chrome下载设置中的”下载前询问每个文件的保存位置“选项未被选中。否则，会弹出很多“另存为”对话框。
                     </FormDescription>
                 </div>
             </FormItem>)}

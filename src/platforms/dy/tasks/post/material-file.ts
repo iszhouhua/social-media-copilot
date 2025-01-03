@@ -1,7 +1,7 @@
 import type { TaskFileInfo } from "@/components/task";
 import type { AwemeDetail } from "../../http/aweme";
 
-export function getMaterialFiles(aweme: AwemeDetail, materialTypes: string[], path?: string): TaskFileInfo[] {
+export function getMaterialFiles(aweme: AwemeDetail, materialTypes: string[]): TaskFileInfo[] {
     if (!materialTypes?.length) {
         return [];
     }
@@ -23,7 +23,6 @@ export function getMaterialFiles(aweme: AwemeDetail, materialTypes: string[], pa
                 filename: name + '.' + (aweme.video?.format || 'mp4'),
                 type: 'url',
                 data: url,
-                path,
             });
         }
     }
@@ -35,7 +34,6 @@ export function getMaterialFiles(aweme: AwemeDetail, materialTypes: string[], pa
                 filename: name + '.png',
                 type: 'url',
                 data: url,
-                path,
             });
         }
     }
@@ -47,7 +45,6 @@ export function getMaterialFiles(aweme: AwemeDetail, materialTypes: string[], pa
                 filename: name + '.mp3',
                 type: 'url',
                 data: url,
-                path,
             });
         }
     }

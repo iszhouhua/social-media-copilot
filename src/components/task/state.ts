@@ -26,7 +26,7 @@ export type TaskSetStateActions = {
     setStatus: React.Dispatch<React.SetStateAction<TaskStatus>>;
 }
 
-export type TaskFileInfo = { filename: string, path?: string } & (
+export type TaskFileInfo = { filename: string } & (
     | {
         type: 'blob';
         data: Blob;

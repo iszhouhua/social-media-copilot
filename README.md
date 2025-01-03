@@ -1,13 +1,9 @@
 
 # 社媒助手
 
-日常工作中，经常会有从需要各社媒平台采集数据的场景，在使用量不大的情况下，手动处理，太麻烦，用其他产品，可能很贵或需要自己配置非常复杂的开发环境。
+日常工作中，经常会有从需要各社媒平台采集数据的场景，在使用量不大的情况下，手动处理，太麻烦；用其他产品，可能很贵或需要自己配置非常复杂的开发环境。
 
 所以，本人开发了社媒助手插件，只需在浏览器上安装此插件，即可实现数据采集的自给自足。无需进行任何额外的操作！
-
-社媒助手是一款在各个社媒平台提供各种辅助功能的浏览器插件，可运行在**Chrome**、**Edge**等所有基于**Chromium**内核开发的浏览器
-
-支持的平台和功能会陆续增加完善，如果本项目对你有帮助，请**star**支持一下！
 
 ## 功能列表
 
@@ -25,6 +21,8 @@
 - **Chrome**：<https://chrome.google.com/webstore/detail/dbichmdlbjdeplpkhcejgkakobjbjalc>
 - **Edge**：<https://microsoftedge.microsoft.com/addons/detail/gneijakmdhgakglgogbpldbjhbeddibj>
 - **其他浏览器**：下载最新版的[social-media-copilot.crx](https://github.com/iszhouhua/social-media-copilot/releases/latest/download/social-media-copilot.crx)文件，手动加载到浏览器中
+
+[点击查看相关文档](https://ocn0jsywtv09.feishu.cn/wiki/space/7441517360869064705)
 
 ## 二次开发
 
@@ -53,13 +51,13 @@ pnpm dev
 
 - Telegram交流群：[点击加入群组](https://t.me/SocialMediaCopilot)
 
-- QQ交流群：[839137339](https://smc.iszhouhua.com/image/qq-group-qr-code.jpg)
+- QQ交流群：[839137339](https://smc.iszhouhua.com/images/qq-group-qr-code.jpg)
 
-- 微信交流群：[点击扫码进群](https://smc.iszhouhua.com/image/wechat-group-qr-code.jpg)
+- 微信交流群：[点击扫码进群](https://smc.iszhouhua.com/images/wechat-group-qr-code.jpg)
 
 - 作者邮箱：<andy_zh@foxmail.com>
 
-- 作者微信：[iszhouhua](https://smc.iszhouhua.com/image/wechat-qr-code.jpg)
+- 作者微信：[iszhouhua](https://smc.iszhouhua.com/images/wechat-qr-code.jpg)
 
 > 添加微信请记得备注来意！
 

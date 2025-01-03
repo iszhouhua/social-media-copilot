@@ -52,7 +52,7 @@ export class Processor extends TaskProcessor<FormSchema, {
             const author = dataInfo.author;
             for (const aweme of dataInfo.awemes) {
                 if (!aweme) continue;
-                const files = getMaterialFiles(aweme, materialTypes, author?.nickname || authorId);
+                const files = getMaterialFiles(aweme, materialTypes);
                 medias.push(...files);
                 const row = [];
                 row.push(author?.uid);

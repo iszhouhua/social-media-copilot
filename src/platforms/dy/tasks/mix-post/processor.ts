@@ -53,7 +53,7 @@ export class Processor extends TaskProcessor<FormSchema, http.aweme.AwemeDetail>
         for (const index in posts) {
             const aweme = posts[index];
             const author = aweme.author;
-            const files = getMaterialFiles(aweme, materialTypes, mixName);
+            const files = getMaterialFiles(aweme, materialTypes);
             if (files.length) {
                 files.forEach(item => {
                     let num = Number(index) + 1;
@@ -109,8 +109,7 @@ export class Processor extends TaskProcessor<FormSchema, http.aweme.AwemeDetail>
                 fileInfos.push({
                     filename: name + '.' + (aweme.video?.format || 'mp4'),
                     type: 'url',
-                    data: url,
-                    path: mixName,
+                    data: url
                 });
             }
         }
@@ -121,8 +120,7 @@ export class Processor extends TaskProcessor<FormSchema, http.aweme.AwemeDetail>
                 fileInfos.push({
                     filename: name + '.png',
                     type: 'url',
-                    data: url,
-                    path: mixName,
+                    data: url
                 });
             }
         }
@@ -133,8 +131,7 @@ export class Processor extends TaskProcessor<FormSchema, http.aweme.AwemeDetail>
                 fileInfos.push({
                     filename: name + '.mp3',
                     type: 'url',
-                    data: url,
-                    path: mixName,
+                    data: url
                 });
             }
         }

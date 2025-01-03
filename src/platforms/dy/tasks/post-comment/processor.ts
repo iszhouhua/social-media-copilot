@@ -66,7 +66,6 @@ export class Processor extends TaskProcessor<FormSchema, http.comment.Comment[]>
                 comment.image_list?.forEach((o, index) => {
                     const name = `${comment.text?.replaceAll('/', '')?.substring(0, 20)}-${comment.cid}-图${index + 1}.png`
                     medias.push({
-                        path: comment.aweme_id,
                         filename: name,
                         type: 'url',
                         data: o.origin_url.url_list.reverse()[0],
@@ -74,7 +73,6 @@ export class Processor extends TaskProcessor<FormSchema, http.comment.Comment[]>
                 });
                 if (static_url) {
                     medias.push({
-                        path: comment.aweme_id,
                         filename: `${comment.text?.replaceAll('/', '')?.substring(0, 20)}-${comment.cid}.png`,
                         type: 'url',
                         data: static_url

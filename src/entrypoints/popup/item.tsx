@@ -3,7 +3,7 @@ import { cn } from "@/utils";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 export interface ItemProp extends React.HTMLAttributes<HTMLDivElement> {
-  icon: LucideIcon;
+  icon: LucideIcon | string;
   title: string;
   label?: React.ReactNode;
 }
@@ -14,7 +14,7 @@ export const Item = (props: ItemProp) => {
   return (<div
     className={cn("h-8 w-full px-4 inline-flex items-center whitespace-nowrap text-sm font-medium justify-start hover:cursor-pointer hover:bg-primary hover:text-primary-foreground", className)}
     {...restProps}>
-    <Icon className="mr-2 h-4 w-4" />
+    {typeof Icon === "string" ? <img src={Icon} className="mr-2 h-4 w-4" alt={title} /> : <Icon className="mr-2 h-4 w-4" />}
     <span className="overflow-ellipsis overflow-hidden flex-1">{title}</span>
     {label}
   </div>);
