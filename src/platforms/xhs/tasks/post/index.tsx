@@ -20,7 +20,9 @@ export { parsePostId, Processor }
 
 export type FormSchema = z.infer<typeof formSchema>;
 
-export default () => {
+export default (props: {
+    urls?: string[]
+}) => {
 
     const taskRef = useRef<React.ComponentRef<typeof TaskDialog>>(null);
 
@@ -28,7 +30,7 @@ export default () => {
         resolver: zodResolver(formSchema),
         defaultValues: {
             needMedia: false,
-            postParams: ''
+            postParams: props?.urls?.join('\n') || ''
         }
     });
 
