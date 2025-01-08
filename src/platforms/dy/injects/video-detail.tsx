@@ -81,7 +81,12 @@ const options: SmcContentScriptUiOptions = {
     return activeVideo?.length > 0 ? activeVideo[activeVideo.length - 1] : document.querySelector('xg-right-grid');
   },
   append: "before",
-  isMatch: (url: URL) => /^\/(video|note)\/(\d+)$/.test(url.pathname) || !!url.searchParams.get('modal_id'),
+  isMatch: (url: URL) => {
+    if (/^\/(video|note)\/(\d+)$/.test(url.pathname)) return true;
+    if (url.searchParams.get('modal_id')) return true;
+    if (url.pathname === "/") return true;
+    return false;
+  },
   onMount: (container: HTMLElement) => {
     container.className = "flex gap-4 bg-transparent mr-8 z-50";
     const root = ReactDOM.createRoot(container);
@@ -91,11 +96,19 @@ const options: SmcContentScriptUiOptions = {
       type = match[1];
       awemeId = match[2];
     } else {
-      const activeVideo = document.querySelector("div[data-e2e=\"feed-active-video\"]");
-      if (!activeVideo) return root;
-      awemeId = activeVideo.getAttribute("data-e2e-vid");
-      type = activeVideo.querySelector(".account-card")?.textContent === "图文" ? "note" : "video";
+      awemeId = new URLSearchParams(location.search).get('modal_id');
+      const activeVideo = document.querySelector('div[data-e2e="feed-active-video"]');
+      if (activeVideo) {
+        type = activeVideo.querySelector(".account-card")?.textContent === "图文" ? "note" : "video";
+        if (!awemeId) {
+          awemeId = activeVideo.getAttribute("data-e2e-vid");
+        }
+      }
     }
+    if (location.pathname === '/') {
+      recommendListener(awemeId);
+    }
+    if(!awemeId)return root;
     const awemeMix = document.querySelector('div[data-e2e="aweme-mix"]');
     root.render(<App type={type} awemeId={awemeId} isMix={!!awemeMix} />);
     return root;
@@ -105,3 +118,24 @@ const options: SmcContentScriptUiOptions = {
   }
 }
 export default options;
+
+/**
+ * 监听推荐视频变化
+ */
+let listenerTimerId: number;
+const recommendListener = function (awemeId: string) {
+  clearInterval(listenerTimerId);
+  listenerTimerId = window.setInterval(() => {
+    if (location.pathname !== '/') {
+      clearInterval(listenerTimerId);
+      return;
+    }
+    const newAwemeId = document.querySelector('div[data-e2e="feed-active-video"]')?.getAttribute("data-e2e-vid");
+    if (newAwemeId && newAwemeId !== awemeId) {
+      // 视频变了
+      const url = new URL(window.location.href);
+      url.searchParams.set("modal_id", newAwemeId);
+      window.history.pushState({}, '', url);
+    }
+  }, 1e3);
+};
