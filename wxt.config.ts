@@ -9,9 +9,6 @@ export default defineConfig({
     description: '__MSG_extDescription__',
     default_locale: 'zh_CN',
     permissions: ["activeTab", "downloads", "scripting"],
-    host_permissions: [
-      "*://*.douyin.com/", "*://*.iesdouyin.com/",
-      "*://*.xiaohongshu.com/", "*://*.xhslink.com/"
-    ]
+    host_permissions: ["<all_urls>"]
   }
 });

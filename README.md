@@ -7,20 +7,20 @@
 
 ## 功能列表
 
-|   平台   | 无水印视频/图片下载 | 采集指定作品的数据 | 采集指定作品的评论 | 采集指定创作者的数据 | 采集指定创作者的作品 | 采集搜索页数据 |
-| :------: | :-----------------: | :----------------: | :----------------: | :------------------: | :------------------: | :------------------: |
-|  小红书  |          ✅          |         ✅          |         ✅          |          ✅           |          ✅           |         ✅           |
-|   抖音   |          ✅          |         ✅          |         ✅          |          ✅           |          ✅           |         ❌           |
+|   平台   | 无水印视频/图片下载 | 采集指定作品的数据 | 采集指定作品的评论 | 采集指定创作者的数据 | 采集指定创作者的作品 |
+| :------: | :-----------------: | :----------------: | :----------------: | :------------------: | :------------------: |
+|  小红书  |          ✅          |         ✅          |         ✅          |          ✅           |          ✅           |
+|   抖音   |          ✅          |         ✅          |         ✅          |          ✅           |          ✅           |
 
 ## 使用教程
 
 推荐优先使用商店版，如无法满足要求再使用开源版自行修改！
 
-> 由于种种原因，自0.0.7版本开始，不再开源完整代码，开源版将继续维护数据采集相关功能供大家学习和参考，其余新增功能将主要维护于商店版。
+> 由于种种原因，自0.0.7版本开始，不再开源完整代码，开源版将继续维护数据采集相关功能供大家学习和参考，其余新增功能将主要维护于商店版。开源版未来计划改成可部署方案，方便开发者自行部署使用。
 
 - **Chrome**：<https://chrome.google.com/webstore/detail/dbichmdlbjdeplpkhcejgkakobjbjalc>
 - **Edge**：<https://microsoftedge.microsoft.com/addons/detail/gneijakmdhgakglgogbpldbjhbeddibj>
-- **其他浏览器**：下载最新版的[social-media-copilot.crx](https://github.com/iszhouhua/social-media-copilot/releases/latest/download/social-media-copilot.crx)文件，手动加载到浏览器中
+- **其他浏览器**：下载最新版的[社媒助手](https://smc.iszhouhua.com/changelog.html)文件，手动加载到浏览器中
 
 ## 二次开发
 
@@ -52,8 +52,6 @@ pnpm dev
 - QQ交流群：[839137339](https://smc.iszhouhua.com/images/qq-group-qr-code.jpg)
 
 - 微信交流群：[点击扫码进群](https://smc.iszhouhua.com/images/wechat-group-qr-code.jpg)
-
-- 作者邮箱：<andy_zh@foxmail.com>
 
 - 作者微信：[iszhouhua](https://smc.iszhouhua.com/images/wechat-qr-code.jpg)
 

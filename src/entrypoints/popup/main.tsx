@@ -47,7 +47,6 @@ export const Popup = () => {
             <Item icon={MessageSquareText} title="Telegram交流群" onClick={() => window.open('https://t.me/SocialMediaCopilot')} />
             <Item icon={MessageSquareText} title="QQ交流群" onClick={() => window.open('https://smc.iszhouhua.com/images/qq-group-qr-code.jpg')} />
             <Item icon={MessageSquareText} title="微信交流群" onClick={() => window.open('https://smc.iszhouhua.com/images/wechat-group-qr-code.jpg')} />
-            <Item icon={MessageSquare} title="添加微信" onClick={() => window.open('https://smc.iszhouhua.com/images/wechat-qr-code.jpg')} />
         </CollapsibleItem>
         <Item icon={JapaneseYen} title="打赏作者" onClick={() => window.open('https://alms.iszhouhua.com')} />
         <Item icon={Info} title="使用文档" onClick={() => window.open('https://smc.iszhouhua.com/docs')} />

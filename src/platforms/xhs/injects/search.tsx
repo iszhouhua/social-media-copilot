@@ -64,7 +64,7 @@ const Component = () => {
 
 const options: SmcContentScriptUiOptions = {
   position: "inline",
-  anchor: () => document.getElementById("search-type")?.parentElement,
+  anchor: () => document.getElementById("channel-container")?.parentElement,
   isMatch: (url: URL) => {
     return url.pathname === '/search_result'||url.pathname === '/search_result/'
   },
