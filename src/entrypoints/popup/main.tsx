@@ -8,8 +8,6 @@
 import ReactDOM from "react-dom/client";
 import dyIcon from "@/assets/icons/dy.png";
 import xhsIcon from "@/assets/icons/xhs.png";
-import { Contact, Info, JapaneseYen, MessageSquare, MessageSquareText, MonitorCheck } from "lucide-react";
-import { CollapsibleItem, Item } from "./item";
 import platforms, { Platform } from "@/platforms";
 
 export const Popup = () => {
@@ -37,20 +35,25 @@ export const Popup = () => {
         });
     };
 
-    return (<div className="flex flex-col gap-2 py-2">
-        {platform ? <platform.popup onOpenDialog={handleOpenDialog} />:
-        <CollapsibleItem icon={MonitorCheck} title="支持的平台">
-                <Item icon={dyIcon} title="抖音" onClick={() => window.open("https://www.douyin.com")} />
-                <Item icon={xhsIcon} title="小红书" onClick={() => window.open("https://www.xiaohongshu.com")} />
-            </CollapsibleItem>}
-        <CollapsibleItem icon={Contact} title="沟通交流">
-            <Item icon={MessageSquareText} title="Telegram交流群" onClick={() => window.open('https://t.me/SocialMediaCopilot')} />
-            <Item icon={MessageSquareText} title="QQ交流群" onClick={() => window.open('https://smc.iszhouhua.com/images/qq-group-qr-code.jpg')} />
-            <Item icon={MessageSquareText} title="微信交流群" onClick={() => window.open('https://smc.iszhouhua.com/images/wechat-group-qr-code.jpg')} />
-        </CollapsibleItem>
-        <Item icon={JapaneseYen} title="打赏作者" onClick={() => window.open('https://alms.iszhouhua.com')} />
-        <Item icon={Info} title="使用文档" onClick={() => window.open('https://smc.iszhouhua.com/docs')} />
-    </div>);
+    return (<>{platform ? <div className="flex flex-col gap-2 py-2">
+        <platform.popup onOpenDialog={handleOpenDialog} />
+    </div> : <div className="w-60">
+        <header className="flex items-center justify-between p-4 gap-4 bg-blue-500 shadow"><p
+            className="w-full text-center text-white">请前往以下平台使用社媒助手</p></header>
+        <main className="m-4">
+            <div className="flex items-center justify-center flex-wrap gap-y-4">
+                <a className="w-16 flex flex-col items-center gap-2" target="_blank" href="https://www.xiaohongshu.com">
+                    <img src={xhsIcon} className="w-8 h-8 rounded-[22.5%]" />
+                    <span className="font-bold">小红书</span>
+                </a>
+                <a className="w-16 flex flex-col items-center gap-2" target="_blank" href="https://www.douyin.com">
+                    <img src={dyIcon} className="w-8 h-8 rounded-[22.5%]" />
+                    <span className="font-bold">抖音</span>
+                </a>
+            </div>
+        </main>
+    </div>}
+    </>);
 };
 
 ReactDOM.createRoot(document.getElementById("root")!).render(<Popup />);

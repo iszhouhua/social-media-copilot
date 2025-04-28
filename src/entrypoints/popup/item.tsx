@@ -24,7 +24,7 @@ export const CollapsibleItem = (props: ItemProp & {
   children: React.ReactNode[]
 }) => {
   const { label, children, ...restProps } = props;
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   return (<Collapsible open={isOpen} onOpenChange={setIsOpen}>
     <CollapsibleTrigger asChild>

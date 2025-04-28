@@ -19,9 +19,12 @@ const request = axios.create({
 // 请求拦截器
 request.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
     const path = axios.getUri(config).replace(baseUrl, '')
-    const sign = await browser.runtime.sendMessage<"executeScript">({
-        name: "executeScript",
-        body: `return window["_webmsxyw"]("${path}",${JSON.stringify(config.data)})`
+    const sign = await browser.runtime.sendMessage<"webmsxyw">({
+        name: "webmsxyw",
+        body: {
+            path,
+            body: config.data ? JSON.stringify(config.data) : ""
+        },
     });
     config.headers["x-s"] = sign['X-s'];
     config.headers["x-t"] = sign['X-t'];

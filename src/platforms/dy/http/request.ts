@@ -13,24 +13,14 @@ const adapter = async (config: InternalAxiosRequestConfig): AxiosPromise => {
         headers: AxiosHeaders.from(config.headers).normalize(true),
         body: config.data
     };
-
-    const response = await browser.runtime.sendMessage<"executeScript">({
-        name: "executeScript",
-        body: `return window.fetch("${axios.getUri(config)}",${JSON.stringify(init)})
-    .then(async (response)=>{
-      const result = { status: response.status, statusText: response.statusText, headers: response.headers};
-      try {
-        result.data = await response.json();;
-      }catch (error){
-        console.error(error);
-      }
-      return result;
-      });`
+    const data = await browser.runtime.sendMessage<"fetch">({
+        name: "fetch",
+        body: [axios.getUri(config), init]
     });
-    if (!response) {
+    if (!data) {
         throw new AxiosError('Network Error')
     }
-    return { ...response, config };
+    return { data, status: 200, statusText: "OK", headers: {}, config };
 };
 
 const request = axios.create({

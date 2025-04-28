@@ -3,9 +3,15 @@ import type { Downloads } from "wxt/browser";
 export { }
 
 type MessageMap = {
-  "executeScript": {
-    request: string;
-    response: any
+  "webmsxyw": {
+    request: {
+      path: string;
+      body: any;
+    };
+    response: {
+      'X-s': string;
+      'X-t': string;
+    }
   };
   "download": {
     request: Downloads.DownloadOptionsType;

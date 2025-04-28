@@ -3,52 +3,20 @@ import { Logo } from "@/components/logo";
 import copy from "copy-to-clipboard";
 import { toast } from "sonner";
 import ReactDOM from "react-dom/client";
-
-type UserPageData = {
-  basicInfo: {
-    desc: string
-    gender: number
-    imageb: string
-    images: string
-    ipLocation: string
-    nickname: string
-    redId: string
-  }
-  extraInfo: {
-
-    blockType: string
-    fstatus: string
-  }
-  interactions: Array<{
-    count: string
-    name: string
-    type: string
-  }>
-  tags: Array<{
-    name: string
-    tagType: string
-  }>
-}
+import { webV1UserOtherinfo } from "../http/user";
 
 const App = (props: {
   userId: string
 }) => {
   const { userId } = props;
-  const [userPageData,setUserPageData] = useState<UserPageData>();
   const taskDialog = useTaskDialog('author-post');
 
-  useEffect(() => {
-    browser.runtime.sendMessage<"executeScript">({
-      name: "executeScript",
-      body: "const data = window[\"__INITIAL_STATE__\"].user.userPageData;return data._rawValue||data._value||data;"
-    }).then(setUserPageData);
-  }, []);
-
-  const copyUserData = () => {
-    let content = `博主名称:${userPageData!.basicInfo.nickname}
-    小红书号:${userPageData!.basicInfo.redId}
+  const copyUserData = async () => {
+    const userPageData = await webV1UserOtherinfo(userId);
+    let content = `博主名称:${userPageData.basic_info.nickname}
+    小红书号:${userPageData!.basic_info.red_id}
     粉丝数:${userPageData!.interactions?.find(item => item.type === "fans")?.count}
-    个人简介:${userPageData!.basicInfo.desc}`;
+    个人简介:${userPageData!.basic_info.desc}`;
     if (copy(content)) {
       toast.success("复制成功");
     } else {
@@ -56,16 +24,17 @@ const App = (props: {
     }
   }
 
-  const handlerOpenExportDialog = () => {
+  const handlerOpenExportDialog = async () => {
+    const userPageData = await webV1UserOtherinfo(userId);
     taskDialog.open({
       author: {
         authorId: userId,
-        authorName: userPageData!.basicInfo.nickname,
+        authorName: userPageData!.basic_info.nickname,
       }
     })
   }
 
-  return (userPageData && <>
+  return (<>
     <Logo />
     <Button onClick={copyUserData}>复制博主信息</Button>
     <Button onClick={handlerOpenExportDialog}>导出笔记数据</Button>

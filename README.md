@@ -16,7 +16,7 @@
 
 推荐优先使用商店版，如无法满足要求再使用开源版自行修改！
 
-> 由于种种原因，自0.0.7版本开始，不再开源完整代码，开源版将继续维护数据采集相关功能供大家学习和参考，其余新增功能将主要维护于商店版。开源版未来计划改成可部署方案，方便开发者自行部署使用。
+> 由于种种原因，自0.0.7版本开始，不再开源完整代码，开源版将继续维护数据采集相关功能供大家学习和参考，其余新增功能将主要维护于商店版。
 
 - **Chrome**：<https://chrome.google.com/webstore/detail/dbichmdlbjdeplpkhcejgkakobjbjalc>
 - **Edge**：<https://microsoftedge.microsoft.com/addons/detail/gneijakmdhgakglgogbpldbjhbeddibj>

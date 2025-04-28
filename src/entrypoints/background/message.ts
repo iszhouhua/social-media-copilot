@@ -9,12 +9,12 @@ export default async function handleMessage(
   switch (name) {
     case "openPopup":
       return browser.action.openPopup();
-    case "executeScript":
-      return executeScript(body, sender);
+    case "webmsxyw":
+      return webmsxyw(body, sender);
     case "realUrl":
       return getRealUrl(body);
     case "fetch":
-      return executionFetch(body);
+      return executionFetch(body, sender);
     case "download":
       if (body.filename) {
         const regexp: RegExp = /[^\w\u4e00-\u9fa5\.\-\_]/g;
@@ -25,14 +25,17 @@ export default async function handleMessage(
   }
 }
 
-async function executeScript(code: string, sender: Runtime.MessageSender) {
+async function webmsxyw(data: {
+  path: string;
+  body: string;
+}, sender: Runtime.MessageSender) {
   const injectionResults = await browser.scripting.executeScript({
     // @ts-ignore
     world: "MAIN",
     target: { tabId: sender.tab?.id! },
     // @ts-ignore
-    func: (code) => new Function(code)(),
-    args: [code]
+    func: (path, body) => window["_webmsxyw"](path, body ? JSON.parse(body) : undefined),
+    args: [data.path, data.body]
   });
   return injectionResults?.[0]?.result;
 }
@@ -41,6 +44,14 @@ async function getRealUrl(url: string) {
   return response.url;
 }
 
-async function executionFetch(body: Array<any>) {
-  return fetch(body[0], body?.[1]).then(res => res.json());
+async function executionFetch(body: Array<any>, sender: Runtime.MessageSender) {
+  const injectionResults = await browser.scripting.executeScript({
+    // @ts-ignore
+    world: "MAIN",
+    target: { tabId: sender.tab?.id! },
+    // @ts-ignore
+    func: (body) => fetch(...body).then(res => res.json()),
+    args: [body]
+  });
+  return injectionResults?.[0]?.result;
 }
