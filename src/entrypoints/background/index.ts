@@ -5,10 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-
-import handleMessage from "./message.ts";
-
 export default defineBackground(() => {
-  // @ts-ignore
-  browser.runtime.onMessage.addListener(handleMessage);
+  // Allows users to open the side panel by clicking on the action toolbar icon
+  browser.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch((error) => console.error(error));
 });

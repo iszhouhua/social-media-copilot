@@ -2,13 +2,18 @@ import { defineConfig } from "wxt";
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
+  extensionApi: "chrome",
   modules: ["@wxt-dev/module-react"],
   srcDir: "src",
+  dev: {
+    server: {
+      port: 3001
+    }
+  },
   manifest: {
-    name: '__MSG_extName__',
-    description: '__MSG_extDescription__',
-    default_locale: 'zh_CN',
-    permissions: ["activeTab", "downloads", "scripting"],
+    name: '社媒助手开源版',
+    description: '社媒助手的开源版本。',
+    permissions: ["tabs", "scripting"],
     host_permissions: ["<all_urls>"]
   }
 });

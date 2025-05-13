@@ -5,28 +5,50 @@
 
 所以，本人开发了社媒助手插件，只需在浏览器上安装此插件，即可实现数据采集的自给自足。无需进行任何额外的操作！
 
-## 功能列表
+目前支持的平台有小红书、抖音、快手，其他平台敬请期待！
 
-|   平台   | 无水印视频/图片下载 | 采集指定作品的数据 | 采集指定作品的评论 | 采集指定创作者的数据 | 采集指定创作者的作品 |
-| :------: | :-----------------: | :----------------: | :----------------: | :------------------: | :------------------: |
-|  小红书  |          ✅          |         ✅          |         ✅          |          ✅           |          ✅           |
-|   抖音   |          ✅          |         ✅          |         ✅          |          ✅           |          ✅           |
+## 商店版
 
-## 使用教程
-
-推荐优先使用商店版，如无法满足要求再使用开源版自行修改！
-
-> 由于种种原因，自0.0.7版本开始，不再开源完整代码，开源版将继续维护数据采集相关功能供大家学习和参考，其余新增功能将主要维护于商店版。
+推荐优先使用商店版，商店版为开箱即用版本。开源版则是为开发者准备的简易版本，可集成在自己的系统之中。
 
 - **Chrome**：<https://chrome.google.com/webstore/detail/dbichmdlbjdeplpkhcejgkakobjbjalc>
 - **Edge**：<https://microsoftedge.microsoft.com/addons/detail/gneijakmdhgakglgogbpldbjhbeddibj>
-- **其他浏览器**：下载最新版的[社媒助手](https://smc.iszhouhua.com/changelog.html)文件，手动加载到浏览器中
+- **其他浏览器**：下载最新版的[社媒助手](https://smc.iszhouhua.com/changelog)文件，手动加载到浏览器中
 
-## 二次开发
+[点击查看详细教程](https://smc.iszhouhua.com/guide/)
+
+> [!NOTE]
+> 在`0.0.7`版本之前，并无开源版与商店版之分，代码是完整开源的。但后面发现，有不少人直接将开源内容用于盈利，更有甚者，移除了所有**社媒助手**相关标识，未做任何更改直接接入支付功能。
+> 于是定将插件拆分为开源版和商店版，商店版维护适合大众使用的功能，开源版仅提供API供开发者集成到自己的系统之中，不含具体的功能实现！
+> 我们一直支持开源，并希望技术能够在良性循环中推动进步。但前提是尊重作者的劳动成果和开源协议。如果未来社区环境改善，或有合适的合作方式，不排除重新开放的可能。
+> 感谢一直以来支持本项目的开发者和用户。
+
+## 开源版
+
+开源版分为两部分，一个是插件端，一个是服务器端。
 
 项目运行需要`NodeJS`，请自行安装运行环境。
 
 > 推荐使用pnpm，也可使用其他依赖管理工具，如：npm、yarn、cnpm等
+
+### 服务器端
+
+服务器端负责提供api服务，开发者可直接通过调用服务端的api获取平台数据
+
+```bash
+# 进入server目录
+cd server
+# 安装依赖
+pnpm install
+# 运行项目
+pnpm dev
+```
+
+运行后访问`http://localhost:3000`，显示`Hello World!`，即表示运行成功！
+
+### 插件端
+
+插件负责向平台发起实际请求，获取到数据后回调给服务器端。
 
 ```bash
 # 安装依赖
@@ -35,27 +57,79 @@ pnpm install
 pnpm dev
 ```
 
-项目运行后会自动打开本机的Chrome浏览器，并自动加载插件代码。
+项目运行后默认会自动打开本机的Chrome浏览器，并自动加载插件代码。
 
-项目核心框架为[WXT](https://github.com/wxt-dev/wxt)，具体可见：[WXT文档](https://wxt.dev)
+随后打开插件，并点击连接，连接成功后即可通过调用服务器端的API获取平台数据了。
 
-## 打赏
+插件端开发文档可参阅[WXT文档](https://wxt.dev)
 
-如果觉得项目不错的话可以打赏哦。您的支持就是我最大的动力！
+## API
 
-[点击前往打赏](https://alms.iszhouhua.com)
+### /request
 
-## 联系作者
+用于向目标平台发起请求
 
-- Telegram交流群：[点击加入群组](https://t.me/SocialMediaCopilot)
+- 请求链接：`http://localhost:3000/request`
+- 请求方法：`POST`
+- 请求体：与[AxiosRequestConfig](https://github.com/axios/axios?tab=readme-ov-file#request-config)相同
 
-- QQ交流群：[839137339](https://smc.iszhouhua.com/images/qq-group-qr-code.jpg)
+下面列举了各个平台获取作品详情的请求，其他数据获取请自行通过浏览器`开发者工具`中的`Network`复制相关参数进行请求
 
-- 微信交流群：[点击扫码进群](https://smc.iszhouhua.com/images/wechat-group-qr-code.jpg)
+- 抖音
 
-- 作者微信：[iszhouhua](https://smc.iszhouhua.com/images/wechat-qr-code.jpg)
+```json
+{
+    "url": "https://www.douyin.com/aweme/v1/web/aweme/detail/",
+    "method": "GET",
+    "params":{
+        "aweme_id":"7483481060458663168"
+    }
+}
+```
 
-> 添加微信请记得备注来意！
+- 小红书
+
+```json
+{
+    "url": "https://edith.xiaohongshu.com/api/sns/web/v1/feed",
+    "method": "POST",
+    "data": {
+        "source_note_id": "68100548000000002002af1d",
+        "image_formats": [
+            "jpg",
+            "webp",
+            "avif"
+        ],
+        "extra": {
+            "need_body_topic": "1"
+        },
+        "xsec_source": "pc_feed",
+        "xsec_token": "AB1bvXKE_cQOoR9MhxeKvX0y4rdHioM-akEz8ypkUmk8U="
+    }
+}
+```
+
+- 快手
+
+```json
+{
+    "url": "https://www.kuaishou.com/graphql",
+    "method": "POST",
+    "data": {
+        "operationName": "visionVideoDetail",
+        "query": "query visionVideoDetail(  $photoId: String  $type: String  $page: String  $webPageArea: String) {  visionVideoDetail(    photoId: $photoId    type: $type    page: $page    webPageArea: $webPageArea  ) {    status    type    author {      id      name      following      headerUrl      livingInfo    }    photo {      id      duration      caption      likeCount      realLikeCount      coverUrl      photoUrl      liked      timestamp      expTag      llsid      viewCount      videoRatio      stereoType      musicBlocked      riskTagContent      riskTagUrl      manifest {        mediaType        businessType        version        adaptationSet {          id          duration          representation {            id            defaultSelect            backupUrl            codecs            url            height            width            avgBitrate            maxBitrate            m3u8Slice            qualityType            qualityLabel            frameRate            featureP2sp            hidden            disableAdaptive          }        }      }      manifestH265      photoH265Url      coronaCropManifest      coronaCropManifestH265      croppedPhotoH265Url      croppedPhotoUrl      videoResource    }    tags {      type      name    }    commentLimit {      canAddComment    }    llsid    danmakuSwitch  }}",
+        "variables": {
+            "page": "detail",
+            "photoId": "3xjzryn333n2ttg",
+            "webPageArea": "brilliantxxunknown"
+        }
+    }
+}
+```
+
+## 项目部署
+
+> 敬请期待
 
 ## Star History
 
