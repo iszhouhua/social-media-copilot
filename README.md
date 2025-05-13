@@ -9,7 +9,7 @@
 
 ## 商店版
 
-推荐优先使用商店版，商店版为开箱即用版本。开源版则是为开发者准备的简易版本，可集成在自己的系统之中。[点击查看详细教程](https://smc.iszhouhua.com/guide/)
+推荐优先使用商店版，商店版为开箱即用版本。开源版则是为开发者准备的简易版本，可集成在自己的系统之中。
 
 - **Chrome**：<https://chrome.google.com/webstore/detail/dbichmdlbjdeplpkhcejgkakobjbjalc>
 - **Edge**：<https://microsoftedge.microsoft.com/addons/detail/gneijakmdhgakglgogbpldbjhbeddibj>
@@ -131,7 +131,7 @@ pnpm dev
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=iszhouhua/social-media-copilot&type=Date)](https://star-history.com/#iszhouhua/social-media-copilot&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=iszhouhua/social-media-copilot&type=Date)](https://www.star-history.com/#iszhouhua/social-media-copilot&Date)
 
 ## ⚠️ 免责声明
 
