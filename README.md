@@ -9,13 +9,11 @@
 
 ## 商店版
 
-推荐优先使用商店版，商店版为开箱即用版本。开源版则是为开发者准备的简易版本，可集成在自己的系统之中。
+推荐优先使用商店版，商店版为开箱即用版本。开源版则是为开发者准备的简易版本，可集成在自己的系统之中。[点击查看详细教程](https://smc.iszhouhua.com/guide/)
 
 - **Chrome**：<https://chrome.google.com/webstore/detail/dbichmdlbjdeplpkhcejgkakobjbjalc>
 - **Edge**：<https://microsoftedge.microsoft.com/addons/detail/gneijakmdhgakglgogbpldbjhbeddibj>
 - **其他浏览器**：下载最新版的[社媒助手](https://smc.iszhouhua.com/changelog)文件，手动加载到浏览器中
-
-[点击查看详细教程](https://smc.iszhouhua.com/guide/)
 
 > [!NOTE]
 > 在`0.0.7`版本之前，并无开源版与商店版之分，代码是完整开源的。但后面发现，有不少人直接将开源内容用于盈利，更有甚者，移除了所有**社媒助手**相关标识，未做任何更改直接接入支付功能。
