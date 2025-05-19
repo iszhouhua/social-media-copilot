@@ -1,0 +1,17 @@
+dist/
+node_modules/
+logs/
+coverage/
+.idea/
+run/
+.DS_Store
+*.sw*
+*.un~
+typings/
+.nyc_output/
+.github/
+.git/
+.wxt/
+.output/
+Dockerfile
+README.md

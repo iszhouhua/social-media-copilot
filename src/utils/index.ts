@@ -9,7 +9,6 @@ export function cn(...inputs: ClassValue[]) {
 export type Platform = {
     code: "dy" | "xhs" | "ks";
     url: string;
-    pattern: string;
 }
 
 export function getPlatform(urlStr: string): Platform | undefined {
@@ -19,19 +18,16 @@ export function getPlatform(urlStr: string): Platform | undefined {
             return {
                 code: "xhs",
                 url: "https://www.xiaohongshu.com",
-                pattern: "*://www.xiaohongshu.com/*"
             };
         case "douyin.com":
             return {
                 code: "dy",
                 url: "https://www.douyin.com",
-                pattern: "*://www.douyin.com/*"
             };
         case "kuaishou.com":
             return {
                 code: "ks",
                 url: "https://www.kuaishou.com",
-                pattern: "*://www.kuaishou.com/*"
             };
     }
 }

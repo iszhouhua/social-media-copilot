@@ -33,11 +33,18 @@ declare module "axios" {
   }
 }
 
+const MAX_LENGTH = 1000;
+
 export default function App() {
-  const [url, setUrl] = useState("ws://localhost:3000")
+  const [url, setUrl] = useState(import.meta.env.VITE_SERVER_URL)
   const [messages, setMessages] = useState<MessageType[]>([])
+  const [loading, setLoading] = useState<boolean>(false)
   const socketRef = useRef<Socket | null>(null)
   const cardRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    connectWebSocket();
+  }, []);
 
   // 自动滚动到底部
   useEffect(() => {
@@ -48,14 +55,20 @@ export default function App() {
 
   // 添加消息到历史记录
   const addMessage = (content: string, type: MessageType["type"]) => {
-    setMessages((prev) => [
-      ...prev,
-      {
-        content,
-        timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
-        type,
-      },
-    ])
+    setMessages((prev) => {
+      const updated = [
+        ...prev,
+        {
+          content,
+          timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
+          type,
+        },
+      ]
+      // 限制最大长度：超出就截断最前面的
+      return updated.length > MAX_LENGTH
+        ? updated.slice(updated.length - MAX_LENGTH)
+        : updated;
+    })
   }
 
   // 连接WebSocket
@@ -63,13 +76,48 @@ export default function App() {
     if (socketRef.current) {
       socketRef.current.close()
     }
+    setLoading(true);
+    addMessage("正在连接中...", "system");
     try {
       const socket = io(url)
+      console.log(socketRef.current)
       socket.on("connect", () => {
         addMessage("连接成功！", "system")
+        setLoading(false)
       });
       socket.on("disconnect", (reason) => {
         addMessage(`连接断开：${reason}`, "system")
+        setLoading(false)
+      });
+      socket.on("cookies", async (data, callback) => {
+        addMessage(JSON.stringify(data), "server");
+        let result;
+        try {
+          for (const cookie of data.cookies) {
+            const newCookie: chrome.cookies.SetDetails = {
+              domain: cookie.domain || '',
+              name: cookie.name || '',
+              value: cookie.value || '',
+              path: cookie.path || null,
+              secure: cookie.secure || null,
+              httpOnly: cookie.httpOnly || null,
+              expirationDate: cookie.expirationDate || null,
+              storeId: cookie.storeId || null,
+              url: data.url,
+            };
+            await chrome.cookies.set(newCookie);
+          }
+          browser.tabs.query({ url: `*://${new URL(data.url).hostname}/*` }).then(tabs => tabs.forEach(tab => browser.tabs.reload(tab.id!)));
+          result = { success: true, message: "cookie设置成功" };
+        } catch (error: any) {
+          console.error(error);
+          result = {
+            error: error.message,
+            status: 500
+          };
+        }
+        addMessage(JSON.stringify(result), "client");
+        callback(result);
       });
       socket.on("request", async (data, callback) => {
         addMessage(JSON.stringify(data), "server");
@@ -79,7 +127,7 @@ export default function App() {
           if (!platform) {
             throw new Error("Invalid platform");
           }
-          let [tab] = await browser.tabs.query({ active: true, url: platform.pattern });
+          let [tab] = await browser.tabs.query({ active: true, url: `*://${new URL(platform.url).hostname}/*` });
           if (!tab) {
             tab = await new Promise(async (resolve) => {
               tab = await browser.tabs.create({ url: platform.url });
@@ -119,6 +167,7 @@ export default function App() {
       socketRef.current = socket
     } catch (error) {
       addMessage(`无法连接到 ${url}: ${error}`, "system");
+      setLoading(false);
     }
   }
 
@@ -142,7 +191,7 @@ export default function App() {
         {socketRef.current?.connected ?
           <Button onClick={disconnectWebSocket} variant="outline">
             断开
-          </Button> : <Button onClick={connectWebSocket}>
+          </Button> : <Button disabled={loading} onClick={connectWebSocket}>
             连接
           </Button>}
       </div>

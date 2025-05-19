@@ -13,7 +13,7 @@ export default defineConfig({
   manifest: {
     name: '社媒助手开源版',
     description: '社媒助手的开源版本。',
-    permissions: ["tabs", "scripting"],
-    host_permissions: ["<all_urls>"]
+    permissions: ["tabs", "scripting", "cookies"],
+    host_permissions: ["<all_urls>"],
   }
 });

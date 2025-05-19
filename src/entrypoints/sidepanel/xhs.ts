@@ -19,7 +19,7 @@ const request = axios.create({
 // 请求拦截器
 request.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
     const path = axios.getUri(config).replace(baseUrl, '')
-    const sign = await browser.scripting.executeScript({
+    const sign:any = await browser.scripting.executeScript({
         target: {
             tabId: config.tabId
         },

@@ -7,5 +7,5 @@
 
 export default defineBackground(() => {
   // Allows users to open the side panel by clicking on the action toolbar icon
-  browser.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch((error) => console.error(error));
+  chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch((error) => console.error(error));
 });

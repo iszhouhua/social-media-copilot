@@ -11,6 +11,7 @@
   "dependencies": {
     "body-parser": "^2.2.0",
     "express": "^5.1.0",
+    "puppeteer-core": "^24.8.2",
     "socket.io": "^4.8.1"
   },
   "devDependencies": {

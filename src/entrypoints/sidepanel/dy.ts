@@ -19,7 +19,7 @@ const adapter = async (config: InternalAxiosRequestConfig): AxiosPromise => {
         },
         world: "MAIN",
         // @ts-ignore
-        func: (input, init) => window.fetch(input, init).then(res=>res.json()).catch(()=>null),
+        func: (input, init) => window.fetch(input, init).then(res => res.json()).catch(() => null),
         args: [axios.getUri(config), init]
 
     }).then(res => res?.[0]?.result);
@@ -54,20 +54,16 @@ function getCommonParams(): Record<string, any> {
     params["version_name"] = "17.4.0";
     params["platform"] = "PC";
     params["pc_client_type"] = 1;
-    params["cookie_enabled"] = navigator?.cookieEnabled;
-    params["screen_width"] = screen?.width;
-    params["screen_height"] = screen?.height;
-    params["browser_language"] = navigator?.language;
-    params["browser_platform"] = navigator?.platform;
-    params["browser_online"] = navigator?.onLine;
-    params["cpu_core_num"] = navigator?.hardwareConcurrency;
-    // @ts-ignore
-    params["device_memory"] = navigator?.deviceMemory;
-    // @ts-ignore
-    params["downlink"] = navigator?.connection?.downlink;
-    // @ts-ignore
-    params["effective_type"] = navigator?.connection?.effectiveType;
-    // @ts-ignore
-    params["round_trip_time"] = navigator?.connection?.rtt;
+    params["cookie_enabled"] = true;
+    params["screen_width"] = 2560;
+    params["screen_height"] = 1440;
+    params["browser_language"] = "zh-CN";
+    params["browser_platform"] = 'Linux x86_64';
+    params["browser_name"] = 'Chrome';
+    params["browser_version"] = "124.0.0.0";
+    params["browser_online"] = true;
+    params["engine_name"] = "Blink";
+    params["engine_version"] = "124.0.0.0";
+    params["os_name"] = "Linux";
     return params;
 }
