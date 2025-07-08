@@ -19,7 +19,7 @@ const request = axios.create({
 // 请求拦截器
 request.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
     const path = axios.getUri(config).replace(baseUrl, '')
-    const sign:any = await browser.scripting.executeScript({
+    const sign: any = await browser.scripting.executeScript({
         target: {
             tabId: config.tabId
         },
@@ -32,11 +32,28 @@ request.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
     config.headers["x-s"] = sign['X-s'];
     config.headers["x-t"] = sign['X-t'];
     config.headers["x-s-common"] = getXSCommon(sign);
+    config.headers["x-xray-traceid"] = traceId();
+    config.headers["x-b3-traceid"] = xB3TraceId();
     return config;
 });
 
 export default request;
 
+
+function xB3TraceId() {
+    for (var e = "", r = 0; r < 16; r++)
+        e += "abcdef0123456789".charAt(Math.floor(16 * Math.random()));
+    return e
+}
+
+function traceId() {
+    // @ts-ignore
+    const random = (bits) => Math.floor(Math.random() * (1 << bits));
+    const e = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : Date.now();
+    const part1 = (BigInt(e) << 23n) | BigInt(random(23));
+    const part2 = (BigInt(random(32)) << 32n) | BigInt(random(32));
+    return part1.toString(16).padStart(16, "0") + part2.toString(16).padStart(16, "0");
+}
 
 //---------- 下面的代码是为了获取x-s-common ------------- //
 
