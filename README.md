@@ -42,7 +42,9 @@ pnpm install
 pnpm dev
 ```
 
-项目运行后会自动打开本机的Chrome浏览器，并自动加载插件代码。
+项目运行成功后，打开自己的Chrome浏览器，进入插件管理面板（`chrome://extensions/`）->开启开发者模式->加载未打包的扩展程序->选择`output/chrome-mv3`目录
+
+随后打开插件，并连接服务器端，连接成功后即可通过调用服务器端的 API 获取平台数据了。
 
 项目核心框架为[WXT](https://github.com/wxt-dev/wxt)，具体可见：[WXT文档](https://wxt.dev)
 
