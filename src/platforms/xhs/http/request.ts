@@ -29,6 +29,8 @@ request.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
     config.headers["x-s"] = sign['X-s'];
     config.headers["x-t"] = sign['X-t'];
     config.headers["x-s-common"] = getXSCommon(sign);
+    config.headers["x-b3-traceid"] = generateTraceId();
+    config.headers["x-xray-traceid"] = traceId();
     return config;
 });
 
@@ -137,4 +139,28 @@ function getSigCount(t) {
     return t && (e++,
         sessionStorage.setItem('sc', e.toString())),
         e
+}
+
+
+// /**
+//  * x-b3-traceid
+//  * @returns
+//  */
+function generateTraceId() {
+    for (var e = "", r = 0; r < 16; r++)
+        e += "abcdef0123456789".charAt(Math.floor(16 * Math.random()));
+    return e
+}
+
+/**
+ * x-xray-traceid
+ * @returns
+ */
+function traceId() {
+    //@ts-ignore
+    const random = (bits) => Math.floor(Math.random() * (1 << bits));
+    const e = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : Date.now();
+    const part1 = (BigInt(e) << 23n) | BigInt(random(23));
+    const part2 = (BigInt(random(32)) << 32n) | BigInt(random(32));
+    return part1.toString(16).padStart(16, "0") + part2.toString(16).padStart(16, "0");
 }

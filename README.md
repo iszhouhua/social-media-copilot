@@ -1,28 +1,19 @@
 
 # 社媒助手
 
-日常工作中，经常会有从需要各社媒平台采集数据的场景，在使用量不大的情况下，手动处理，太麻烦；用其他产品，可能很贵或需要自己配置非常复杂的开发环境。
+社媒助手v0版本的开源代码，会做一些简单的维护，供大家学习交流使用。
 
-所以，本人开发了社媒助手插件，只需在浏览器上安装此插件，即可实现数据采集的自给自足。无需进行任何额外的操作！
+推荐优先使用商店版，商店版拥有比开源版更完整的功能！[点击前往Chrome应用商店](https://chrome.google.com/webstore/detail/dbichmdlbjdeplpkhcejgkakobjbjalc)
 
 ## 功能列表
 
 |   平台   | 无水印视频/图片下载 | 采集指定作品的数据 | 采集指定作品的评论 | 采集指定创作者的数据 | 采集指定创作者的作品 |
 | :------: | :-----------------: | :----------------: | :----------------: | :------------------: | :------------------: |
-|  小红书  |          ✅          |         ✅          |         ✅          |          ✅           |          ✅           |
-|   抖音   |          ✅          |         ✅          |         ✅          |          ✅           |          ✅           |
+|  小红书  |          ✅          |         ✅          |         ✅          |          ✅           |          ✅          |
+|   抖音   |          ✅          |         ✅          |         ✅          |          ✅           |          ✅          |
+|   快手   |          ❌          |         ❌          |         ❌          |           ❌          |          ❌          |
 
-## 使用教程
-
-推荐优先使用商店版，如无法满足要求再使用开源版自行修改！
-
-> 由于种种原因，自0.0.7版本开始，不再开源完整代码，开源版保留供大家学习和参考，新增功能将主要维护于商店版。
-
-- **Chrome**：<https://chrome.google.com/webstore/detail/dbichmdlbjdeplpkhcejgkakobjbjalc>
-- **Edge**：<https://microsoftedge.microsoft.com/addons/detail/gneijakmdhgakglgogbpldbjhbeddibj>
-- **其他浏览器**：下载最新版的[社媒助手](https://smc.iszhouhua.com/changelog.html)文件，手动加载到浏览器中
-
-## 二次开发
+## 快速开始
 
 项目运行需要`NodeJS`，请自行安装运行环境。
 
@@ -38,24 +29,6 @@ pnpm dev
 项目运行后会自动打开本机的Chrome浏览器，并自动加载插件代码。
 
 项目核心框架为[WXT](https://github.com/wxt-dev/wxt)，具体可见：[WXT文档](https://wxt.dev)
-
-## 打赏
-
-如果觉得项目不错的话可以打赏哦。您的支持就是我最大的动力！
-
-[点击前往打赏](https://alms.iszhouhua.com)
-
-## 联系作者
-
-- Telegram交流群：[点击加入群组](https://t.me/SocialMediaCopilot)
-
-- QQ交流群：[839137339](https://smc.iszhouhua.com/images/qq-group-qr-code.jpg)
-
-- 微信交流群：[点击扫码进群](https://smc.iszhouhua.com/images/wechat-group-qr-code.jpg)
-
-- 作者微信：[iszhouhua](https://smc.iszhouhua.com/images/wechat-qr-code.jpg)
-
-> 添加微信请记得备注来意！
 
 ## Star History
 
