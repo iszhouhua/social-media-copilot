@@ -1,10 +1,3 @@
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
-
-export function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs));
-}
-
 /**
  * 等待函数返回非空内容，直到超时
  * @param func 需要执行的函数
@@ -34,7 +27,7 @@ export function waitFor<T>(func: () => T, interval = 500, timeout = 5000): Promi
  * 暂停指定时长
  * @param {number} ms 需要暂停的毫秒数
  */
-export function delay(ms: number) {
+export function sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
 };
 
@@ -50,14 +43,4 @@ export async function hash(content: string, algorithm: AlgorithmIdentifier = 'SH
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     return hashHex;
-}
-
-export function getPlatformCode(urlStr = location.href) {
-    const hostname = new URL(urlStr).hostname;
-    switch (hostname) {
-        case "www.xiaohongshu.com":
-            return "xhs";
-        case "www.douyin.com":
-            return "dy";
-    }
 }

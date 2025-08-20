@@ -1,7 +1,5 @@
-import icon from "@/assets/icons/logo.png";
-
 export function Logo() {
-    return (<img src={icon} alt="社媒助手" onClick={() => {
-        browser.runtime.sendMessage<"openPopup">({ name: "openPopup" });
-      }}></img>);
+  return (<img src={browser.runtime.getURL("/icon/48.png")} className="hover:cursor-pointer size-9" alt="社媒助手" onClick={() => {
+    sendMessage("openPopup", undefined);
+  }}></img>);
 }

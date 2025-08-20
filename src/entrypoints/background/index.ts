@@ -5,10 +5,47 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-
-import handleMessage from "./message.ts";
-
 export default defineBackground(() => {
-  // @ts-ignore
-  browser.runtime.onMessage.addListener(handleMessage);
+    onMessage('openPopup', () => {
+        return browser.action.openPopup();
+    });
+
+    onMessage('openTaskDialog', ({ data, sender }) => {
+        return sendMessage('openTaskDialog', data, sender.tab?.id);
+    });
+
+    onMessage('fetch', ({ data, sender }) => {
+        return browser.scripting.executeScript({
+            target: {
+                tabId: sender.tab?.id!
+            },
+            world: "MAIN",
+            // @ts-ignore
+            func: (data) => window.fetch(data.url, data).then(res => res.json()).catch(() => null),
+            args: [data]
+
+        }).then(res => res?.[0]?.result);
+    });
+
+    onMessage('webmsxyw', ({ data, sender }) => {
+        return browser.scripting.executeScript({
+            target: {
+                tabId: sender.tab?.id!
+            },
+            world: "MAIN",
+            func: (path, body) => {
+                // @ts-ignore
+                return window["_webmsxyw"](path, body ? JSON.parse(body) : undefined);
+            },
+            args: [data.path, data.body ? JSON.stringify(data.body) : '']
+
+        }).then(res => res?.[0]?.result as any);
+    });
+
+    onMessage('download', ({ data }) => {
+        if (data.filename) {
+            data.filename = "社媒助手开源版/" + data.filename
+        }
+        return browser.downloads.download(data);
+    });
 });
