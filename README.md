@@ -6,20 +6,34 @@
 
 目前支持的平台有小红书、抖音、快手，其他平台敬请期待！
 
-## 商店版
+## 版本说明
 
-推荐优先使用商店版，商店版为开箱即用版本，拥有更全面的功能，开源版功能较为简单。
+插件目前共分为三个版本，分别是[商店版](https://chrome.google.com/webstore/detail/dbichmdlbjdeplpkhcejgkakobjbjalc)、[开源版](https://github.com/iszhouhua/social-media-copilot/tree/main)、[server版](https://github.com/iszhouhua/social-media-copilot/tree/server)
 
- - [点击前往Chrome应用商店](https://chrome.google.com/webstore/detail/dbichmdlbjdeplpkhcejgkakobjbjalc)
+其中，`商店版`功能最全面，但是不开源。`开源版`和`server版`均开源。
 
- - [点击查看更新记录](https://smzs.xisence.com/changelog)
+### 商店版
 
-> [!NOTE]  
-> 自`v1.0`开始，大部分功能均主要维护于商店版，开源版仍会维护，但不会增加太多功能！
+商店版拥有最完整的功能，开箱即用，优先维护，但是不开源。
 
-## 开源版
+ - [点击前往商店版的Chrome应用商店](https://chrome.google.com/webstore/detail/dbichmdlbjdeplpkhcejgkakobjbjalc)
 
-`main`分支为社媒助手`v0.x`版本的开源代码，会做一些基础功能的维护，供大家学习交流使用。开源版目前支持的主要功能如下：
+ - [点击查看商店版的更新记录](https://smzs.xisence.com/changelog)
+
+### server版
+
+通过API进行调用，且支持自定义部署，维护于[server](https://github.com/iszhouhua/social-media-copilot/tree/server)分支中，适合需要通过API获取数据的用户。
+
+该分支**服务器端**对外提供`HTTP`服务，通过[socket.io](https://github.com/socketio/socket.io)将请求代理到**插件端**，由插件端发起实际请求并将结果回调给**服务器端**。
+
+
+### 开源版（当前分支）
+
+基于社媒助手`v0.x`版本的代码进行开源，维护于[main](https://github.com/iszhouhua/social-media-copilot/tree/main)分支中，会做一些基础功能的维护，供大家学习交流使用。
+
+ - [点击前往开源版的Chrome应用商店](https://chromewebstore.google.com/detail/hakljifdbjcjinlfkmbnecagjmgmlooh)
+
+开源版目前支持的主要功能如下：
 
 |   平台   | 无水印视频/图片下载 | 采集指定作品的数据 | 采集指定作品的评论 | 采集指定创作者的数据 | 采集指定创作者的作品 |
 | :------: | :-----------------: | :----------------: | :----------------: | :------------------: | :------------------: |
@@ -27,11 +41,7 @@
 |   抖音   |          ✅          |         ✅          |         ✅          |          ✅           |          ✅          |
 |   快手   |          ❌          |         ❌          |         ❌          |           ❌          |          ❌          |
 
-> [!IMPORTANT]
-> 如果需要部署到自己的服务器，并且能通过API进行调用，可查看[server](https://github.com/iszhouhua/social-media-copilot/tree/server)分支。
-> 该分支**服务器端**对外提供`HTTP`服务，通过[socket.io](https://github.com/socketio/socket.io)将请求代理到**插件端**，由插件端发起实际请求并将结果回调给**服务器端**。
-
-### 项目结构
+## 项目结构
 
 ```text
 .
@@ -56,11 +66,11 @@
 
 ```
 
-### 功能说明
+## 功能说明
 
-[点击查看抖音功能说明](./docs/dy.md)
+ - [点击查看抖音功能说明](./docs/dy.md)
 
-[点击查看小红书功能说明](./docs/xhs.md)
+ - [点击查看小红书功能说明](./docs/xhs.md)
 
 ## 快速开始
 

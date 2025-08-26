@@ -44,6 +44,10 @@
 
 ![图片](./images/dy/popup.png)
 
+批量采集完成后会有两个操作按钮，一个是导出Excel文件，另一个是下载图片、视频等媒体文件。
+
+![图片](./images/task-completed.png)
+
 ### 批量采集达人
 
 ![图片](./images/dy/batch-export-user.png)

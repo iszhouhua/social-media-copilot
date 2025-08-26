@@ -43,9 +43,6 @@ export default defineBackground(() => {
     });
 
     onMessage('download', ({ data }) => {
-        if (data.filename) {
-            data.filename = "社媒助手开源版/" + data.filename
-        }
         return browser.downloads.download(data);
     });
 });

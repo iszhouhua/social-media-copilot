@@ -10,12 +10,6 @@ export default defineConfig({
     description: '__MSG_extDescription__',
     default_locale: 'zh_CN',
     permissions: ["activeTab", "downloads", "scripting"],
-    host_permissions: ["<all_urls>"],
-    web_accessible_resources: [
-      {
-        resources: ["/icon/*", "/assets/content-script.css"],
-        matches: ["<all_urls>"]
-      }
-    ],
+    web_accessible_resources: [{ resources: ["/icon/*"], matches: ["<all_urls>"] }],
   }
 });
