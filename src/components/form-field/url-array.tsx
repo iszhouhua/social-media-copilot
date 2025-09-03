@@ -54,7 +54,7 @@ export const UrlArrayFormField = <
                 return (<FormItem>
                     <div className="flex items-center justify-between">
                         <FormLabel>{label}</FormLabel>
-                        <FormDescription>{description ?? `请输入${label}，可直接使用App分享链接`}</FormDescription>
+                        <FormDescription>{description ?? `请输入${label}，一行一个`}</FormDescription>
                     </div>
                     <FormControl>
                         <Textarea rows={10} placeholder={`请输入${label}，一行一个，可直接粘贴多行文本内容`}

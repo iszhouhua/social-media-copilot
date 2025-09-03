@@ -69,6 +69,7 @@ export async function loadCommon(ctx: ContentScriptContext, tasks: TaskDialogOpt
             // render root
             const wrapper = document.createElement("div");
             container.append(wrapper);
+            wrapper.style.fontSize = "16px";
             const root = ReactDOM.createRoot(wrapper);
             root.render(<App tasks={tasks} />);
             return { root, wrapper };

@@ -7,8 +7,9 @@
 
 import dyIcon from "@/assets/icons/dy.png";
 import xhsIcon from "@/assets/icons/xhs.png";
+import ksIcon from "@/assets/icons/ks.png";
 import { Separator } from "@/components/ui/separator";
-import { Book, BookText, BookUser, Bug, CircleUser, Contact, GitBranch, Heart, Info, MessageSquare, MessageSquareMore, MessageSquareText, MonitorCheck } from "lucide-react";
+import { Book, BookText, BookUser, Bug, CircleUser, GitBranch,  MessageSquareMore, MonitorCheck } from "lucide-react";
 import ReactDOM from "react-dom/client";
 import { Tabs } from "wxt/browser";
 import { CollapsibleItem, CollapsibleItemProp, Item } from './item';
@@ -51,6 +52,22 @@ const platforms: Platform[] = [
                 { icon: MessageSquareMore, title: '批量导出笔记评论', onClick: () => { handleOpenDialog('post-comment') } },
             ];
         }
+    },
+    {
+        code: 'ks',
+        hostname: 'www.kuaishou.com',
+        getItems: (handleOpenDialog) => {
+            return [
+                { icon: CircleUser, title: '批量导出达人信息', onClick: () => { handleOpenDialog('author') } },
+                {
+                    icon: Book, title: '批量导出视频数据', defaultExpand: true, items: [
+                        { icon: BookText, title: '根据视频链接导出', onClick: () => { handleOpenDialog('post') } },
+                        { icon: BookUser, title: '根据达人链接导出', onClick: () => { handleOpenDialog('author-post') } },
+                    ]
+                },
+                { icon: MessageSquareMore, title: '批量导出视频评论', onClick: () => { handleOpenDialog('post-comment') } },
+            ];
+        }
     }
 ];
 
@@ -79,6 +96,7 @@ const App = () => {
             <CollapsibleItem icon={MonitorCheck} title="支持的平台" defaultExpand iconClassName="text-lime-600">
                 <Item icon={dyIcon} title="抖音" onClick={() => window.open("https://www.douyin.com")} />
                 <Item icon={xhsIcon} title="小红书" onClick={() => window.open("https://www.xiaohongshu.com")} />
+                <Item icon={ksIcon} title="快手" onClick={() => window.open("https://www.kuaishou.com")} />
             </CollapsibleItem>}
         <Separator />
         <Item icon={GitBranch} title="查看源码" iconClassName="text-violet-600" onClick={() => window.open('https://github.com/iszhouhua/social-media-copilot')} />

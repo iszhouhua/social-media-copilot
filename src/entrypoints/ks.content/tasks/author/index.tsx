@@ -1,4 +1,4 @@
-import { LimitPerIdFormField } from "@/components/form-field/limit-per-id";
+import { NeedInteractionInfoFormField } from "@/components/form-field/need-interaction-info";
 import { RequestIntervalFormField } from "@/components/form-field/request-interval";
 import { UrlArrayFormField, urlArrayTransform } from "@/components/form-field/url-array";
 import { Button } from "@/components/ui/button";
@@ -7,38 +7,25 @@ import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { parseUrl } from "../author/parse-url";
+import { parseUrl } from "./parse-url";
 import { Processor } from "./processor";
 
 const formSchema = z.object({
-    limitPerId: z.coerce.number().min(1, "请输入需要导出的数量"),
     urls: z.array(z.string().trim()).nonempty().transform((arg, ctx) => urlArrayTransform(arg, ctx, parseUrl)),
     requestInterval: z.coerce.number().min(0, "请求间隔必须大于0秒")
 });
 
 export type FormSchema = z.infer<typeof formSchema>;
 
-export { Processor };
+const Component = (props: TaskDialogProps) => {
+    const { setProcessor, ...restProps } = props;
 
-export type ExtendedProps = {
-    author?: {
-        authorId: string
-        authorName: string
-        postCount: number
-        url: string
-    }
-}
-
-const Component = (props: TaskDialogProps & ExtendedProps) => {
-    const { author, setProcessor, ...restProps } = props;
-
-    const form = useForm<any, any, FormSchema>({
+    const form = useForm<FormSchema>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            urls: author ? [author.url] : [],
-            limitPerId: author?.postCount || 10,
+            urls: [],
             requestInterval: 0
-        },
+        }
     });
 
     const handleSubmit = (values: FormSchema) => {
@@ -48,18 +35,14 @@ const Component = (props: TaskDialogProps & ExtendedProps) => {
     return (<Dialog {...restProps}>
         <DialogContent className="max-w-[600px]" aria-describedby={undefined}>
             <DialogHeader>
-                <DialogTitle>{author ? <>导出<span className="text-red-400">{author.authorName}</span>的视频数据</> : <>根据达人链接批量导出视频数据</>}</DialogTitle>
+                <DialogTitle>批量导出达人数据</DialogTitle>
             </DialogHeader>
             <Form {...form}>
                 <form className="space-y-6 py-4">
-                    {!author && <UrlArrayFormField
+                    <UrlArrayFormField
                         control={form.control}
-                        name="urls" label="达人链接" />}
-                    <LimitPerIdFormField
-                        control={form.control}
-                        name="limitPerId"
-                        description={author ? `当前达人共有${author.postCount}个作品` : '每位达人需要导出的视频数量'} />
-                    <RequestIntervalFormField control={form.control} name="requestInterval"/>
+                        name="urls" label="达人链接" />
+                    <RequestIntervalFormField control={form.control} name="requestInterval" />
                 </form>
             </Form>
             <DialogFooter>
@@ -69,9 +52,8 @@ const Component = (props: TaskDialogProps & ExtendedProps) => {
     </Dialog>);
 }
 
-
 export default defineTaskDialog({
-    name: "author-post",
+    name: "author",
     children: Component,
     processor: Processor
 });

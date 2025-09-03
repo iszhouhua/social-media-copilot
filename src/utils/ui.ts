@@ -44,6 +44,7 @@ export async function createSocialMediaCopilotUi(options: SocialMediaCopilotUiOp
     }
     anchor.setAttribute(options.name, '');
     const shadowHost = document.createElement(options.name);
+    shadowHost.style.zIndex = "100";
     // Create the shadow and isolated nodes
     const shadow = shadowHost.attachShadow({ mode: "open" });
     // add style

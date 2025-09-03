@@ -167,7 +167,7 @@ export class Processor extends TaskProcessor<FormSchema, DouyinAPI.AwemeV1WebCom
     /**
      * 获取视频评论的子评论
      * @param client 连接信息
-     * @param awemeId 笔记ID
+     * @param awemeId 视频ID
      * @param commentId 根评论ID
      * @param limit 条数限制
      */
