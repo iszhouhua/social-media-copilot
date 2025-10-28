@@ -6,6 +6,7 @@
  */
 
 import axios, { InternalAxiosRequestConfig } from "axios";
+import { md5 } from 'js-md5';
 
 const baseUrl = "https://edith.xiaohongshu.com";
 
@@ -19,25 +20,17 @@ const request = axios.create({
 // 请求拦截器
 request.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
     const path = axios.getUri(config).replace(baseUrl, '')
-    const sign: any = await browser.scripting.executeScript({
-        target: {
-            tabId: config.tabId
-        },
-        world: "MAIN",
-        // @ts-ignore
-        func: (path, body) => window["_webmsxyw"](path, body ? JSON.parse(body) : undefined),
-        args: [path, config.data ? JSON.stringify(config.data) : ""]
-
-    }).then(res => res?.[0]?.result);
-    config.headers["x-s"] = sign['X-s'];
-    config.headers["x-t"] = sign['X-t'];
-    config.headers["x-s-common"] = getXSCommon(sign);
+    config.headers["x-s"] = await seccore_signv2(path, config.data,config.tabId);
+    config.headers["x-t"] = +new Date + "";
+    config.headers["x-s-common"] = getXSCommon();
     config.headers["x-xray-traceid"] = traceId();
     config.headers["x-b3-traceid"] = xB3TraceId();
     return config;
 });
 
 export default request;
+
+
 
 
 function xB3TraceId() {
@@ -55,32 +48,61 @@ function traceId() {
     return part1.toString(16).padStart(16, "0") + part2.toString(16).padStart(16, "0");
 }
 
-//---------- 下面的代码是为了获取x-s-common ------------- //
+// @ts-ignore
+async function seccore_signv2(e, a,tabId) {
+    // @ts-ignore
+    const _type_of = function (t) {
+        return t && "undefined" != typeof Symbol && t.constructor === Symbol ? "symbol" : typeof t
+    };
+    var r = window.toString
+        , c = e;
+    "[object Object]" === r.call(a) || "[object Array]" === r.call(a) || (void 0 === a ? "undefined" : (
+        _type_of)(a)) === "object" && null !== a ? c += JSON.stringify(a) : "string" == typeof a && (c += a);
+    var d = (md5)([c].join(""));
+    var s = await browser.scripting.executeScript({
+        target: {  tabId: tabId},
+        world: "MAIN",
+        func: (a, b) => {
+            // @ts-ignore
+            return window["mnsv2"](a, b);
+        },
+        args: [c, d]
 
-function getXSCommon(sign: any) {
-    const Xs = sign["X-s"];
-    const Xt = sign["X-t"];
-    const u = Xt || "";
-    const s = Xs || "";
-    const c = "";
-    const l = getSigCount((u && s) || c);
+    }).then(res => res?.[0]?.result as any);
+    // @ts-ignore
+    var f = {
+        x0: '4.2.6',
+        x1: "xhs-pc-web",
+        // @ts-ignore
+        x2: window['xsecplatform'] || "PC",
+        x3: s,
+        x4: a ? void 0 === a ? "undefined" : (_type_of)(a) : ""
+    };
+    return "XYS_" + encrypt_b64Encode(encrypt_encodeUtf8(JSON.stringify(f)))
+}
+
+//---------- x-s-common ------------- //
+
+function getXSCommon() {
     const f = localStorage["b1"];
+    const l = (tb)("".concat("").concat("").concat(f));
     const p = localStorage["b1b1"] || "1";
     const o = os_getOS();
     const h = {
-        s0: getPlatformCode(o),
+        s0: getPlatform(o),
         s1: "",
         x0: p,
-        x1: "3.6.8",
+        x1: "4.2.6",
         x2: o,
         x3: "xhs-pc-web",
-        x4: "4.15.2",
+        x4: "4.83.1",
         x5: getCookie("a1"),
-        x6: u,
-        x7: s,
+        x6: "",
+        x7: "",
         x8: f,
-        x9: encrypt_mcr(u + s + f),
-        x10: l,
+        x9: l,
+        x10: 0,
+        x11: "normal",
     };
     return encrypt_b64Encode(encrypt_encodeUtf8(JSON.stringify(h)));
 }
@@ -112,7 +134,7 @@ function getCookie(name) {
 }
 
 // @ts-ignore
-function getPlatformCode(t) {
+function getPlatform(t) {
     switch (t) {
         case "Windows":
             return 0;
@@ -130,9 +152,23 @@ function getPlatformCode(t) {
 }
 
 // @ts-ignore
-function getSigCount(t) {
-    var e = Number(sessionStorage.getItem('sc') || '0');
-    return t && (e++,
-        sessionStorage.setItem('sc', e.toString())),
-        e
-}
+var tb = function (e) {
+    // @ts-ignore
+    for (var a = 0xedb88320, r, c, d = 256, s = []; d--; s[d] = r >>> 0)
+        for (c = 8,
+            r = d; c--;)
+            r = 1 & r ? r >>> 1 ^ a : r >>> 1;
+    // @ts-ignore
+    return function (e) {
+        if ("string" == typeof e) {
+            for (var r = 0, c = -1; r < e.length; ++r)
+                // @ts-ignore
+                c = s[255 & c ^ e.charCodeAt(r)] ^ c >>> 8;
+            return -1 ^ c ^ a
+        }
+        for (var r = 0, c = -1; r < e.length; ++r)
+            // @ts-ignore
+            c = s[255 & c ^ e[r]] ^ c >>> 8;
+        return -1 ^ c ^ a
+    }
+}()
