@@ -42,6 +42,21 @@ export default defineBackground(() => {
         }).then(res => res?.[0]?.result as any);
     });
 
+    onMessage('mnsv2', ({ data, sender }) => {
+        return browser.scripting.executeScript({
+            target: {
+                tabId: sender.tab?.id!
+            },
+            world: "MAIN",
+            func: (a,b) => {
+                // @ts-ignore
+                return window["mnsv2"](a,b);
+            },
+            args: data
+
+        }).then(res => res?.[0]?.result as any);
+    });
+
     onMessage('download', ({ data }) => {
         return browser.downloads.download(data);
     });
