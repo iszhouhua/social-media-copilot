@@ -58,15 +58,16 @@ export function getImageUrl(imageInfo: XhsAPI.ImageInfo, format: string = "png")
     return `${imageCdns[randomIndex]}/${traceId}?imageView2/format/${format}`;
 }
 
-const videoCdns: string[] = [
-    "https://sns-video-qc.xhscdn.com",
-    "https://sns-video-hw.xhscdn.com",
-    "https://sns-video-bd.xhscdn.com",
-    "https://sns-video-qn.xhscdn.com",
-];
 
 export function getVideoUrl(videoInfo: XhsAPI.VideoInfo) {
-    const randomIndex = Math.floor(Math.random() * videoCdns.length);
-    const videoKey = videoInfo.consumer.origin_video_key;
-    return `${videoCdns[randomIndex]}/${videoKey}`;
+    // throw new Error('获取视频链接失败');
+    const strem = videoInfo?.media?.stream;
+    if (!strem) {
+        return;
+    }
+    const h265 = strem?.h265 || strem?.h_265 || [];
+    if (h265.length > 0) {
+        const maxH265 = h265.sort((a, b) => b?.size - a?.size)[0];
+        return maxH265.master_url;
+    }
 }

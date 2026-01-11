@@ -9,6 +9,7 @@ export default defineConfig({
     name: '__MSG_extName__',
     description: '__MSG_extDescription__',
     default_locale: 'zh_CN',
+    host_permissions: ["*://*.xiaohongshu.com/*", "*://*.douyin.com/*", "*://*.kuaishou.com/*"],
     permissions: ["activeTab", "downloads", "scripting"],
     web_accessible_resources: [{ resources: ["/icon/*"], matches: ["<all_urls>"] }],
   }
