@@ -20,7 +20,7 @@ const request = axios.create({
 // 请求拦截器
 request.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
     const path = axios.getUri(config).replace(baseUrl, '')
-    config.headers["x-s"] = await seccore_signv2(path, config.data,config.tabId);
+    config.headers["x-s"] = await seccore_signv2(path, config.data, config.tabId);
     config.headers["x-t"] = +new Date + "";
     config.headers["x-s-common"] = getXSCommon();
     config.headers["x-xray-traceid"] = traceId();
@@ -49,7 +49,7 @@ function traceId() {
 }
 
 // @ts-ignore
-async function seccore_signv2(e, a,tabId) {
+async function seccore_signv2(e, a, tabId) {
     // @ts-ignore
     const _type_of = function (t) {
         return t && "undefined" != typeof Symbol && t.constructor === Symbol ? "symbol" : typeof t
@@ -59,16 +59,18 @@ async function seccore_signv2(e, a,tabId) {
     "[object Object]" === r.call(a) || "[object Array]" === r.call(a) || (void 0 === a ? "undefined" : (
         _type_of)(a)) === "object" && null !== a ? c += JSON.stringify(a) : "string" == typeof a && (c += a);
     var d = (md5)([c].join(""));
+    const dd = (md5)(e);
     var s = await browser.scripting.executeScript({
-        target: {  tabId: tabId},
+        target: { tabId: tabId },
         world: "MAIN",
-        func: (a, b) => {
+        // @ts-ignore
+        func: (a, b, c) => {
             // @ts-ignore
-            return window["mnsv2"](a, b);
+            return window["mnsv2"](a, b, c);
         },
-        args: [c, d]
+        args: [c, d, dd]
 
-    }).then(res => res?.[0]?.result as any);
+    }).then((res: any) => res?.[0]?.result as any);
     // @ts-ignore
     var f = {
         x0: '4.2.6',
