@@ -27,30 +27,15 @@ export default defineBackground(() => {
         }).then(res => res?.[0]?.result);
     });
 
-    onMessage('webmsxyw', ({ data, sender }) => {
-        return browser.scripting.executeScript({
-            target: {
-                tabId: sender.tab?.id!
-            },
-            world: "MAIN",
-            func: (path, body) => {
-                // @ts-ignore
-                return window["_webmsxyw"](path, body ? JSON.parse(body) : undefined);
-            },
-            args: [data.path, data.body ? JSON.stringify(data.body) : '']
-
-        }).then(res => res?.[0]?.result as any);
-    });
-
     onMessage('mnsv2', ({ data, sender }) => {
         return browser.scripting.executeScript({
             target: {
                 tabId: sender.tab?.id!
             },
             world: "MAIN",
-            func: (a,b) => {
+            func: (a,b,c) => {
                 // @ts-ignore
-                return window["mnsv2"](a,b);
+                return window["mnsv2"](a,b,c);
             },
             args: data
 

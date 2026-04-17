@@ -78,7 +78,8 @@ async function seccore_signv2(e, a) {
     "[object Object]" === r.call(a) || "[object Array]" === r.call(a) || (void 0 === a ? "undefined" : (
         _type_of)(a)) === "object" && null !== a ? c += JSON.stringify(a) : "string" == typeof a && (c += a);
     var d = (md5)([c].join(""));
-    var s = await sendMessage("mnsv2", [c, d]);
+    var dd = (md5)(e)
+    var s = await sendMessage("mnsv2", [c, d, dd]);
     // @ts-ignore
     var f = {
         x0: '4.2.6',
