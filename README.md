@@ -8,22 +8,22 @@
 
 ## 版本说明
 
-插件目前共分为三个版本，分别是[商店版](https://chrome.google.com/webstore/detail/dbichmdlbjdeplpkhcejgkakobjbjalc)、[开源版](https://github.com/iszhouhua/social-media-copilot/tree/main)、[server版](https://github.com/iszhouhua/social-media-copilot/tree/server)
+插件目前共分为三个版本，分别是[商店版](https://chromewebstore.google.com/detail/iecafjejbggeoldcjiehgoolokaebpdf)、[开源版](https://github.com/iszhouhua/social-media-copilot/tree/main)、[server版](https://github.com/iszhouhua/social-media-copilot/tree/server)
 
 其中，`商店版`功能最全面，但是不开源。`开源版`和`server版`均开源。
 
-### 商店版
+### [商店版](https://chromewebstore.google.com/detail/iecafjejbggeoldcjiehgoolokaebpdf)
 
 商店版拥有最完整的功能，开箱即用，优先维护，但是不开源。目前支持的平台有小红书、抖音、哔哩哔哩、快手、TikTok等。
 
-### server版
+### [server版](https://github.com/iszhouhua/social-media-copilot/tree/server)
 
 通过API进行调用，且支持自定义部署，维护于[server](https://github.com/iszhouhua/social-media-copilot/tree/server)分支中，适合需要通过API获取数据的用户。
 
 该分支**服务器端**对外提供`HTTP`服务，通过[socket.io](https://github.com/socketio/socket.io)将请求代理到**插件端**，由插件端发起实际请求并将结果回调给**服务器端**。
 
 
-### 开源版（当前分支）
+### [开源版（当前分支）](https://github.com/iszhouhua/social-media-copilot/tree/main)
 
 基于社媒助手`v0.x`版本的代码进行开源，维护于[main](https://github.com/iszhouhua/social-media-copilot/tree/main)分支中，会做一些基础功能的维护，供大家学习交流使用。
 
