@@ -12,6 +12,10 @@
 
 其中，`商店版`功能最全面，但是不开源。`开源版`和`server版`均开源。
 
+商店版安装地址：[https://chrome.google.com/webstore/detail/iecafjejbggeoldcjiehgoolokaebpdf](https://chrome.google.com/webstore/detail/iecafjejbggeoldcjiehgoolokaebpdf)
+
+开源版安装地址：[https://chrome.google.com/webstore/detail/ahlgeaindbdacjbpapjmdcdeandimhhn](https://chrome.google.com/webstore/detail/ahlgeaindbdacjbpapjmdcdeandimhhn)
+
 ### [商店版](https://chromewebstore.google.com/detail/iecafjejbggeoldcjiehgoolokaebpdf)
 
 商店版拥有最完整的功能，开箱即用，优先维护，但是不开源。目前支持的平台有小红书、抖音、哔哩哔哩、快手、TikTok等。
