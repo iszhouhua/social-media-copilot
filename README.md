@@ -93,7 +93,7 @@ pnpm dev
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=iszhouhua/social-media-copilot&type=Date)](https://star-history.com/#iszhouhua/social-media-copilot&Date)
+[![Star History Chart](https://star-history.dera.page/svg?repos=iszhouhua/social-media-copilot&type=Date)](https://star-history.dera.page/#iszhouhua/social-media-copilot&Date)
 
 ## ⚠️ 免责声明
 
