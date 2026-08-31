@@ -33,6 +33,7 @@
     "@webext-core/messaging": "^2.1.0",
     "aria-hidden": "v1.2.1",
     "axios": "^1.7.3",
+    "bowser": "^2.14.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "copy-to-clipboard": "^3.3.3",

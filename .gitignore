@@ -25,7 +25,3 @@ build.sh
 *.njsproj
 *.sln
 *.sw?
-
-
-*-lock.json
-*-lock.yaml
